@@ -1,19 +1,108 @@
-// components/NavBar.js
+"use client"
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from './NavBar.module.css';
 
 export default function NavBar() {
+    // State to track if navbar should be transparent or solid
+    const [scrolled, setScrolled] = useState(false);
+    
+    // Handle scroll event to change navbar style
+    useEffect(() => {
+        const handleScroll = () => {
+            const isScrolled = window.scrollY > 50;
+            if (isScrolled !== scrolled) {
+                setScrolled(isScrolled);
+            }
+        };
+        
+        window.addEventListener('scroll', handleScroll);
+        
+        // Clean up
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [scrolled]);
+    
+    // Function to handle smooth scrolling to sections
+    const scrollToSection = (e, sectionId) => {
+        e.preventDefault();
+        
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
-        <nav className={styles.navbar}>
-          <div className={styles.logo}>
-            <img src="/images/logo.png" alt="Logo" />
-          </div>
+        <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
+            <div className={styles.logo}>
+                <Link href="/">
+                    <img src="/images/logo.png" alt="Logo" />
+                </Link>
+            </div>
       
-          <ul className={styles.navLinks}>
-            <li><Link href="/">About</Link></li>
-            <li><Link href="/about">Categories</Link></li>
-            <li><Link href="/contact">Contact</Link></li>
-          </ul>
+            <ul className={styles.navLinks}>
+                <li>
+                    <a 
+                        href="#about" 
+                        onClick={(e) => scrollToSection(e, 'about')}
+                    >
+                        About
+                    </a>
+                </li>
+                <li>
+                    <a 
+                        href="#categories" 
+                        onClick={(e) => scrollToSection(e, 'categories')}
+                    >
+                        Categories
+                    </a>
+                </li>
+                <li>
+                    <a 
+                        href="#contact" 
+                        onClick={(e) => scrollToSection(e, 'contact')}
+                    >
+                        Contact
+                    </a>
+                </li>
+            </ul>
+            
+            {/* Mobile menu toggle button */}
+            <div className={styles.menuToggle}>
+                <input type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+                <ul className={styles.mobileMenu}>
+                    <li>
+                        <a 
+                            href="#about" 
+                            onClick={(e) => scrollToSection(e, 'about')}
+                        >
+                            About
+                        </a>
+                    </li>
+                    <li>
+                        <a 
+                            href="#categories" 
+                            onClick={(e) => scrollToSection(e, 'categories')}
+                        >
+                            Categories
+                        </a>
+                    </li>
+                    <li>
+                        <a 
+                            href="#contact" 
+                            onClick={(e) => scrollToSection(e, 'contact')}
+                        >
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </nav>
-      );
+    );
 }

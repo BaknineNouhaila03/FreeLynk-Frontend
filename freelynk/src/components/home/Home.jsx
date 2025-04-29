@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <section className={styles.pageBackground}>
+      <section id="home" className={styles.pageBackground}>
         <NavBar />
         <div className={styles.heroSection}>
           <h1>
@@ -43,7 +43,7 @@ export default function Home() {
         </div>
       </section>
       
-      <section className={styles.about}>
+      <section id="about" className={styles.about}>
         <div className={styles.aboutContent}>
           <h2>Welcome to FreeLynk — Your Go-To Platform for Top Freelance Talent</h2>
           <p>Looking for the perfect freelancer to bring your vision to life? Whether you need a creative designer, skilled developer, savvy marketer, or expert writer, we've got you covered. Our platform connects you with handpicked, highly rated freelancers from around the world — so you can hire with confidence and get the job done right.
@@ -51,7 +51,7 @@ export default function Home() {
         </div>
       </section>
       
-      <section className={styles.categories}>
+      <section id="categories" className={styles.categories}>
         <div className={styles.categoriesContent}>
           <h1>Accomplish tasks across more than <span className={styles.orangeText}>32</span> different categories</h1>
         </div>
@@ -91,7 +91,7 @@ export default function Home() {
         </div>
       </section>
      
-      <section className={styles.contact}>
+      <section id="contact" className={styles.contact}>
         <div className={styles.contactContentGrid}>
           <div className={styles.contactColumn}>
             <div className={styles.language}>

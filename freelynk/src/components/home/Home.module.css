@@ -30,6 +30,7 @@
 .heroSection {
   max-width: 600px;
   padding-top: 80px;
+  
   animation: fadeIn 1s ease-in;
 }
 
@@ -45,6 +46,8 @@
   line-height: 1.2;
   margin-bottom: 30px;
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 5px #000, 5px 5px 5px rgb(119, 119, 130), 0 0 10px rgb(234, 248, 154);
+
 }
 
 .buttons {
@@ -107,7 +110,7 @@
 }
 
 .aboutContent {
-  max-width: 640px;
+  max-width: 600px;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
