@@ -1,221 +1,320 @@
+/* Home.module.css */
+.container {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Common section styling */
+.section {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  position: relative;
+}
+
+/* Background Hero Section */
 .pageBackground {
+  height: 100vh;
+
   background-image: url('/images/bg.avif');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh;
-  width: 100%;
-  padding-top: 80px;
-  padding-left: 40px;
+  padding: 0 5%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   color: white;
 }
 
-.about {
-  background-image: url('/images/bgabout.png'); 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  padding: 40px;
-
-  flex-direction: column; /* <-- stack vertically */
-  justify-content: center; /* center vertically */
-  align-items: flex-start; /* <-- align to LEFT */
-  color: white;
-  text-align: left; /* <-- text align left */
-  padding-left: 50px; /* match the hero section */
-  padding-top: 80px; /* optional: if you want same top space */
-}
-.aboutContent{
-  max-width: 600px; /* Limit the width */
-  padding-left: 45px ;
+.heroSection {
+  max-width: 600px;
+  padding-top: 80px;
+  animation: fadeIn 1s ease-in;
 }
 
-.aboutContent h2{
-  color: white;
-  font-size: 38px;
-  font-weight: bold;
-  line-height: 1.2;
-  margin-bottom: 30px;
-}
-
-.aboutContent p{
-  color: white;
-  font-size: 28px;
-  line-height: 1.2;
-  margin-bottom: 30px;
-}
-
-.categories{
-  background-image: url('/images/bgblack.png'); /* <-- YOUR SECOND IMAGE */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  padding: 40px;
-
-  flex-direction:row;
-   /* <-- stack vertically */
-  justify-content: left; /* center vertically */
-  align-items: flex-start; /* <-- align to LEFT */
-  color: white;
-  text-align: left; /* <-- text align left */
-  padding-left: 50px; /* match the hero section */
-  padding-top: 80px; /* optional: if you want same top space */
-
-}
-.categoriesContent{
-  max-width: 500px; /* Limit the width */
-  padding-left: 45px ;
-  padding-top: 100px;
-
-  justify-content: right;
-}
-.orangeText {
-  color: orange; /* or you can use a specific shade like #FFA500 */
-  font-weight: bold;
-}
-.categoriesContent h1 {
-  color: white;
-  font-size: 50px;
-  font-weight: bold;
-  line-height: 1.2;
-  margin-bottom: 30px;
-}
-
-.categoriesGrid {
-  display: flex;
-  gap: 80px; /* space between columns */
-  padding-top: 40px;
-  padding-left: 4px;
-}
-
-.categoriesGrid ul {
-  list-style: none; /* remove bullet points */
-  padding: 40px;
-}
-
-.categoriesGrid li {
-  margin-bottom: 40px;
-  font-size: 22px;
-  color: white;
-}
-
-
-
-.heroSection  {
-  max-width: 600px; /* Limit the width */
-  padding-left: 50px ;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .heroSection h1 {
   color: white;
-  font-size: 68px;
+  font-size: clamp(2.5rem, 5vw, 4.25rem); /* Responsive font size */
   font-weight: bold;
   line-height: 1.2;
   margin-bottom: 30px;
-  text-shadow: 2px 2px 6px rgba(245, 238, 238, 0.7);
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .buttons {
   display: flex;
   gap: 20px;
-  padding-left: 30px ;
+  flex-wrap: wrap; /* Allow buttons to wrap on very small screens */
+  margin-top: 20px;
+}
+
+.clientButton, .freelancerButton {
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 150px;
+  text-align: center;
 }
 
 .clientButton {
   background-color: #233876; /* Dark blue */
   color: white;
   font-weight: bold;
-  padding: 12px 24px;
   border: none;
-  border-radius: 10px;
-  font-size: 19px;
-  cursor: pointer;
 }
 
 .clientButton:hover {
   background-color: #f2a469;
   color: #233876;
-  font-weight: bold;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .freelancerButton {
   background-color: transparent;
   color: white;
   font-weight: bold;
-  padding: 12px 24px;
   border: 2px solid white;
-  border-radius: 10px;
-  font-size: 19px;
-  cursor: pointer;
 }
 
 .freelancerButton:hover {
- color: #f2a469;
- border: 2px solid #f2a469;
-
+  color: #f2a469;
+  border: 2px solid #f2a469;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.contact{
-  background-color: black;
-  height: 90vh;
-  width: 100%;
-  display: flex;
-  padding: 40px;
-
-  flex-direction:row;
-   /* <-- stack vertically */
-  justify-content: left; /* center vertically */
-  align-items: flex-start; /* <-- align to LEFT */
+/* About Section */
+.about {
+  height: 100vh;
+  background-image: url('/images/bgabout.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 5%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   color: white;
-  text-align: left; /* <-- text align left */
-  padding-left: 50px; /* match the hero section */
-  padding-top: 80px; /* optional: if you want same top space */
-
 }
 
+.aboutContent {
+  max-width: 640px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+}
 
+.aboutContent h2 {
+  color: white;
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-weight: bold;
+  line-height: 1.2;
+  margin-bottom: 30px;
+}
 
+.aboutContent p {
+  color: white;
+  font-size: clamp(1.1rem, 2vw, 1.75rem);
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+/* Categories Section */
+.categories {
+  height: 100vh;
+
+  background-image: url('/images/bgblack.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 5%;
+  flex-direction: column;
+  color: white;
+}
+
+.categoriesContent {
+  max-width: 700px;
+  margin-bottom: 40px;
+}
+
+.categoriesContent h1 {
+  color: white;
+  font-size: clamp(1.75rem, 3vw, 3.1rem);
+  font-weight: bold;
+  line-height: 1.2;
+  margin-bottom: 30px;
+}
+
+.orangeText {
+  color: orange;
+  font-weight: bold;
+}
+
+.categoriesGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(20px, 4vw, 80px);
+  width: 100%;
+  justify-content: space-between;
+}
+
+.categoriesGrid ul {
+  list-style: none;
+  padding: 0;
+  flex: 1;
+  min-width: 200px;
+}
+
+.categoriesGrid li {
+  margin-bottom: clamp(15px, 2vw, 40px);
+  font-size: clamp(1rem, 1.5vw, 1.4rem);
+  color: white;
+  position: relative;
+  padding-left: 20px;
+  transition: transform 0.3s ease;
+}
+
+.categoriesGrid li:before {
+  content: "•";
+  color: #f2a469;
+  position: absolute;
+  left: 0;
+}
+
+.categoriesGrid li:hover {
+  color: #f2a469;
+  transform: translateX(5px);
+}
+
+/* Contact Section */
+.contact {
+  background-color: black;
+  padding: 5%;
+  flex-direction: column;
+  color: white;
+}
 
 .contactContentGrid {
   display: flex;
-  gap: 80px; /* space between columns */
-  padding-top: 40px;
-  padding-left: 4px;
-  flex-direction: ROW;
-
+  flex-wrap: wrap;
+  gap: clamp(30px, 4vw, 80px);
+  width: 100%;
 }
 
-.contactContentGrid ul {
-  list-style: none; /* remove bullet points */
-  padding: 40px;
-
+.contactColumn {
+  flex: 1;
+  min-width: 200px;
 }
 
-.contactContentGrid li, .contactContentGrid b {
-  font-size: 18px;
+.contactColumn h3 {
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: bold;
+  margin-bottom: 20px;
   color: white;
-  padding-top: 15px;
-
 }
 
-.contactContentGrid .language {
+.contactColumn ul {
+  list-style: none;
+  padding: 0;
+}
+
+.contactColumn li {
+  margin-bottom: 15px;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  color: #ccc;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.contactColumn li:hover {
+  color: #f2a469;
+}
+
+.language {
   display: flex;
-
-  flex-direction: row;
-  
+  align-items: center;
+  gap: 10px;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
 }
-.language img {
-    padding-top: 9px;
-    padding-right: 4px;
 
-  height: 40px;
+.language img {
+  height: 30px;
+  width: auto;
+}
+
+/* Media Queries */
+@media (max-width: 1024px) {
+  .categoriesGrid {
+    gap: 40px;
+  }
+  
+  .categoriesGrid li {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroSection h1 {
+    text-align: center;
+  }
+  
+  .buttons {
+    justify-content: center;
+  }
+  
+  .categories {
+    flex-direction: column;
+  }
+  
+  .categoriesContent {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .categoriesGrid {
+    justify-content: center;
+  }
+  
+  .categoriesGrid ul {
+    min-width: 45%;
+  }
+}
+
+@media (max-width: 576px) {
+  .pageBackground, .about, .categories, .contact {
+    padding: 40px 20px;
+  }
+  
+  .buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+  }
+  
+  .clientButton, .freelancerButton {
+    width: 100%;
+  }
+  
+  .categoriesGrid ul {
+    min-width: 100%;
+  }
+  
+  .contactContentGrid {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .contactColumn {
+    min-width: 100%;
+  }
 }
