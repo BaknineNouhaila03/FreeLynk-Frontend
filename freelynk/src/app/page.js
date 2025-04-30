@@ -5,11 +5,12 @@ import LoginForm from "@/components/auth/LoginForm";
 import ResetPassword from "@/components/auth/ResetPassword";
 import ResetPassword2 from "@/components/auth/ResetPassword2";
 import ResetPassword3 from "@/components/auth/ResetPassword3";
+import Navbar from "@/components/navbar/navbar";
 
 export default function Home() {
   return (
     <div className={styles.page}>
-      <ResetPassword3/>
-    </div>
+      <Navbar></Navbar>
+     </div>
   );
 }

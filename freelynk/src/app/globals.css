@@ -21,7 +21,7 @@ body {
 
 body {
   color: var(--foreground);
-  background: url('/assets/SignIn.jpg');
+  /* background: url('/assets/SignIn.jpg'); */
   background-repeat: no-repeat;
   height: 100vh;
   width: 100%;
