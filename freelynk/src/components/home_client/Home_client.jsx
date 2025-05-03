@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import NavBar from "../navbar/NavBar";
+import NavBar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { FiPlus, FiFolder, FiGlobe } from "react-icons/fi";
 
@@ -83,27 +83,36 @@ const ActionButtons = () => {
         { icon: <FiGlobe />, label: "Browse Projects" }
     ];
     return (
-        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "20px", marginTop: "-30px" }}>
-            {buttons.map((btn, idx) => (
-                <button key={idx} style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    backgroundColor: "#f2a469",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "12px",
-                    padding: "12px 20px",
-                    fontWeight: "bold",
-                    boxShadow: "4px 4px 0px rgba(242, 164, 105, 0.35)",
-                    cursor: "pointer",
-                    minWidth: "250px"
-                }}>
-                    {btn.icon} {btn.label}
+        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "60px", marginTop: "-25px", height: "40px" }}>
+            {buttons.map((btn, index) => (
+                <button
+                    key={index}
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "8px",
+                        backgroundColor: "#f2a469",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "12px",
+                        padding: "12px 20px",
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        boxShadow: "4px 4px 0px rgba(242, 164, 105, 0.35)",
+                        cursor: "pointer",
+                        width: "250px",
+                        height: "50px",
+                        marginTop: "-20px"
+                    }}
+                >
+                    {btn.icon}
+                    {btn.label}
                 </button>
             ))}
         </div>
     );
+    
 };
 
 const Section = ({ title, freelancers }) => (
@@ -146,7 +155,7 @@ const FreelancerCard = ({ freelancer }) => (
                 }} />
                 <span style={{ fontWeight: "500" }}>{freelancer.name}</span>
                 <span style={{ marginLeft: "auto", fontSize: "14px", color: "#777" }}>
-                    ⭐ {freelancer.rating} ({freelancer.reviews})
+                &#x2605; {freelancer.rating} ({freelancer.reviews})
                 </span>
             </div>
             <p style={{ fontSize: "14px", color: "#666", marginBottom: "6px" }}>{freelancer.description}</p>
