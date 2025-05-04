@@ -5,7 +5,7 @@ import Image from 'next/image';
 import NavBar from '../navbar2/Navbar';
 import Footer from '../Footer/Footer';
 
-const Sidebar = ({ conversations, activeConversation, setActiveConversation, searchTerm, setSearchTerm, filteredConversations }) => {
+const Sidebar = ({ conversations, activeConversation, setActiveConversation, searchTerm, setSearchTerm, filteredConversations, closeSidebar }) => {
   return (
     <div className={styles.sidebar}>
       <div className={styles.sidebarHeader}>
@@ -21,6 +21,12 @@ const Sidebar = ({ conversations, activeConversation, setActiveConversation, sea
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+          <button className={styles.closeSidebarButton} onClick={closeSidebar}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
         </div>
       </div>
       <div className={styles.conversationsList}>
@@ -28,7 +34,10 @@ const Sidebar = ({ conversations, activeConversation, setActiveConversation, sea
           <div
             key={conversation.id}
             className={`${styles.conversationItem} ${activeConversation === conversation.id ? styles.activeConversation : ''}`}
-            onClick={() => setActiveConversation(conversation.id)}
+            onClick={() => {
+              setActiveConversation(conversation.id);
+              closeSidebar(); // Close sidebar when selecting a conversation on mobile
+            }}
           >
             <div className={styles.conversationAvatar}>
               <img
@@ -114,8 +123,9 @@ const ChatInterface = () => {
   ]);
   const [newMessage, setNewMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [sidebarVisible, setSidebarVisible] = useState(true); // Default to visible on desktop, will be adjusted in useEffect
   const messagesEndRef = useRef(null);
+  const sidebarRef = useRef(null);
 
   // Filter conversations based on search term
   const filteredConversations = conversations.filter(convo =>
@@ -142,6 +152,41 @@ const ChatInterface = () => {
     }
   }, [messages]);
 
+  // Auto-hide sidebar on small screens when component mounts
+  useEffect(() => {
+    const checkWindowSize = () => {
+      if (window.innerWidth <= 768) {
+        setSidebarVisible(false);
+      } else {
+        setSidebarVisible(true);
+      }
+    };
+    
+    // Check on initial load
+    checkWindowSize();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkWindowSize);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkWindowSize);
+  }, []);
+
+  // Close sidebar when clicking outside on mobile
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (window.innerWidth <= 768 && 
+          sidebarRef.current && 
+          !sidebarRef.current.contains(event.target) &&
+          !event.target.closest(`.${styles.toggleSidebarButton}`)) {
+        setSidebarVisible(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (newMessage.trim() === '') return;
@@ -156,9 +201,16 @@ const ChatInterface = () => {
     return `${date.toLocaleString('en-US', { weekday: 'short' })} at ${date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit' })}`;
   };
 
-  // Toggle sidebar visibility (for mobile)
+  // Toggle sidebar visibility
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
+  };
+  
+  // Close sidebar (for mobile)
+  const closeSidebar = () => {
+    if (window.innerWidth <= 768) {
+      setSidebarVisible(false);
+    }
   };
 
   // Get active conversation details
@@ -167,127 +219,135 @@ const ChatInterface = () => {
   return (
     <div>
       <NavBar/>
-    <div className={styles.mainContainer}>
-      {/* Sidebar component */}
-      <div className={`${styles.sidebarContainer} ${sidebarVisible ? '' : styles.hiddenSidebar}`}>
-        <Sidebar 
-          conversations={conversations} 
-          activeConversation={activeConversation} 
-          setActiveConversation={setActiveConversation}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          filteredConversations={filteredConversations}
-        />
-      </div>
-      
-      {/* Chat area */}
-      <div className={styles.chatContainer}>
-        <div className={styles.chatHeader}>
-          <div className={styles.recipientInfo}>
-            <button 
-              className={styles.toggleSidebarButton}
-              onClick={toggleSidebar}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
-              </svg>
-            </button>
-            <div className={styles.avatarContainer}>
-              <img 
-                src="/images/profle.jpeg" 
-                alt="Avatar" 
-                width={40} 
-                height={40}
-                className={styles.avatar} 
-              />
-            </div>
-            <div className={styles.recipientName}>
-              {activeConvDetails.name}
-              {isTyping && <div className={styles.typingIndicator}>is typing a message...</div>}
+      <div className={styles.mainContainer}>
+        {/* Sidebar overlay for mobile */}
+        {sidebarVisible && window.innerWidth <= 768 && (
+          <div className={styles.sidebarOverlay} onClick={closeSidebar}></div>
+        )}
+        
+        {/* Sidebar component */}
+        <div 
+          ref={sidebarRef}
+          className={`${styles.sidebarContainer} ${sidebarVisible ? styles.sidebarVisible : styles.sidebarHidden}`}
+        >
+          <Sidebar 
+            conversations={conversations} 
+            activeConversation={activeConversation} 
+            setActiveConversation={setActiveConversation}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            filteredConversations={filteredConversations}
+            closeSidebar={closeSidebar}
+          />
+        </div>
+        
+        {/* Chat area */}
+        <div className={styles.chatContainer}>
+          <div className={styles.chatHeader}>
+            <div className={styles.recipientInfo}>
+              <button 
+                className={styles.toggleSidebarButton}
+                onClick={toggleSidebar}
+                aria-label="Toggle sidebar"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="3" y1="12" x2="21" y2="12"></line>
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+              </button>
+              <div className={styles.avatarContainer}>
+                <img 
+                  src="/images/profle.jpeg" 
+                  alt="Avatar" 
+                  width={40} 
+                  height={40}
+                  className={styles.avatar} 
+                />
+              </div>
+              <div className={styles.recipientName}>
+                {activeConvDetails.name}
+                {isTyping && <div className={styles.typingIndicator}>is typing a message...</div>}
+              </div>
             </div>
           </div>
-          
-        </div>
 
-        <div className={styles.chatMessages}>
-          {messages.map((message) => (
-            <div 
-              key={message.id} 
-              className={`${styles.messageContainer} ${message.sender === 'user' ? styles.userMessage : styles.recipientMessage}`}
-            >
-              {message.sender === 'recipient' && (
+          <div className={styles.chatMessages}>
+            {messages.map((message) => (
+              <div 
+                key={message.id} 
+                className={`${styles.messageContainer} ${message.sender === 'user' ? styles.userMessage : styles.recipientMessage}`}
+              >
+                {message.sender === 'recipient' && (
+                  <div className={styles.messageAvatar}>
+                    <img 
+                      src="/images/profle.jpeg"
+                      alt="Avatar" 
+                      width={32} 
+                      height={32}
+                      className={styles.avatar} 
+                    />
+                  </div>
+                )}
+                <div className={styles.messageContent}>
+                  <div className={styles.messageText}>{message.text}</div>
+                  {message.timestamp && (
+                    <div className={styles.messageTimestamp}>
+                      {formatTimestamp(message.timestamp)}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+            {isTyping && (
+              <div className={`${styles.messageContainer} ${styles.recipientMessage}`}>
                 <div className={styles.messageAvatar}>
                   <img 
-                    src="/images/profle.jpeg"
+                    src="/images/profle.jpeg" 
                     alt="Avatar" 
                     width={32} 
                     height={32}
                     className={styles.avatar} 
                   />
                 </div>
-              )}
-              <div className={styles.messageContent}>
-                <div className={styles.messageText}>{message.text}</div>
-                {message.timestamp && (
-                  <div className={styles.messageTimestamp}>
-                    {formatTimestamp(message.timestamp)}
+                <div className={styles.messageContent}>
+                  <div className={`${styles.typingIndicatorBubble}`}>
+                    <span className={styles.typingDot}></span>
+                    <span className={styles.typingDot}></span>
+                    <span className={styles.typingDot}></span>
                   </div>
-                )}
-              </div>
-            </div>
-          ))}
-          {isTyping && (
-            <div className={`${styles.messageContainer} ${styles.recipientMessage}`}>
-              <div className={styles.messageAvatar}>
-                <img 
-                  src="/images/profle.jpeg" 
-                  alt="Avatar" 
-                  width={32} 
-                  height={32}
-                  className={styles.avatar} 
-                />
-              </div>
-              <div className={styles.messageContent}>
-                <div className={`${styles.typingIndicatorBubble}`}>
-                  <span className={styles.typingDot}></span>
-                  <span className={styles.typingDot}></span>
-                  <span className={styles.typingDot}></span>
                 </div>
               </div>
-            </div>
-          )}
-          <div ref={messagesEndRef} />
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          <form className={styles.messageInputContainer} onSubmit={handleSendMessage}>
+            <button type="button" className={styles.attachButton}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+              </svg>
+            </button>
+            <input
+              type="text"
+              placeholder="Type your message here"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              className={styles.messageInput}
+            />
+            <button type="submit" className={styles.sendButton}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </form>
         </div>
-
-        <form className={styles.messageInputContainer} onSubmit={handleSendMessage}>
-          <button type="button" className={styles.attachButton}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
-            </svg>
-          </button>
-          <input
-            type="text"
-            placeholder="Type your message here"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            className={styles.messageInput}
-          />
-          <button type="submit" className={styles.sendButton}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
-          </button>
-        </form>
+      </div>
+      <div style={{ backgroundColor: "#2f3c7e", marginTop: "50px" }}>
+        <Footer />
       </div>
     </div>
-    <div style={{ backgroundColor: "#2f3c7e", marginTop: "50px" }}>
-                <Footer />
-      </div>
-    </div>
-
   );
 };
 
