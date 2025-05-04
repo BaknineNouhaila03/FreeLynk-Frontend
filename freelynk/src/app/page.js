@@ -6,10 +6,14 @@ import ResetPassword from "@/components/auth/ResetPassword";
 import ResetPassword2 from "@/components/auth/ResetPassword2";
 import ResetPassword3 from "@/components/auth/ResetPassword3";
 
-export default function Home() {
-  return (
-    <div className={styles.page}>
-      <ResetPassword3/>
-    </div>
-  );
+import Home from '@/components/home/Home'; 
+import RatingFreelancer from "@/components/rating/RatingComponent";
+import AddProject from "@/components/AddProject/AddProject";
+import ProjectInterface from "@/components/MyProjectDetails/ProjectDetails";
+import MyProjects from "@/components/MyProjects/MyProjects";
+import SavedFreelancers from "@/components/SavedFreelancers/SavedFreelancers";
+import BrowseProjects from "@/components/BrowseProjects/BrowseProjects";
+
+export default function IndexPage() {
+  return <BrowseProjects  />;
 }
