@@ -2,6 +2,8 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    border-radius: 8px;
+    margin-top: 80px;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   }
   
@@ -76,7 +78,7 @@
   
   .activeTab {
     color: #f2a469;
-    font-weight: 500;
+    font-weight: bold;
   }
   
   .activeTab::after {

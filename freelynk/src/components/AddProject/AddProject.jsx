@@ -1,6 +1,8 @@
 "use client"
 import React, { useState } from 'react';
 import './AddProject.css';
+import Footer from '../Footer/Footer';
+import NavBar from '../navbar2/Navbar';
 
 const AddProject = () => {
   const [project, setProject] = useState({
@@ -61,6 +63,8 @@ const AddProject = () => {
   };
 
   return (
+    <div>
+      <NavBar/>
     <div className="add-project-container">
       <h1 className="add-project-title">Add a Project</h1>
       
@@ -185,6 +189,11 @@ const AddProject = () => {
         </div>
       </form>
     </div>
+      <div style={{ backgroundColor: "#2f3c7e", marginTop: "50px" }}>
+                <Footer />
+      </div>
+      </div>
+    
   );
 };
 

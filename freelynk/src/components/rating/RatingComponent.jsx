@@ -1,6 +1,8 @@
 "use client"
 import React, { useState } from 'react';
 import './RatingFreelancer.css';
+import NavBar from '../navbar2/Navbar';
+import Footer from '../Footer/Footer';
 
 const RatingFreelancer = () => {
   const [ratings, setRatings] = useState({
@@ -51,6 +53,8 @@ const RatingFreelancer = () => {
   };
   
   return (
+    <div>
+      <NavBar/>
     <div className="rating-container">
       <h1 className="rating-title">Rating The Freelancer</h1>
       
@@ -97,6 +101,11 @@ const RatingFreelancer = () => {
         </div>
       </form>
     </div>
+    <div style={{ backgroundColor: "#2f3c7e", marginTop: "50px" }}>
+                <Footer />
+    </div>
+  </div>
+
   );
 };
 

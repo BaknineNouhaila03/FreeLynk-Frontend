@@ -126,8 +126,9 @@ export default function Home() {
           </div>
         </div>
       </section>
-     
+     <div style={{backgroundColor:"black"}}>
       <Footer />
+      </div>
     </div>
   );
 }

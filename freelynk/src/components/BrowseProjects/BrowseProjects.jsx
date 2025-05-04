@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import styles from './BrowseProjects.module.css';
 import { BookmarkIcon,Search, Filter } from 'lucide-react';
+import NavBar from '../navbar2/Navbar';
+import Footer from '../Footer/Footer';
 
 export default function BrowseProjects() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -70,6 +72,8 @@ export default function BrowseProjects() {
   );
 
   return (
+    <div>
+      <NavBar/>
     <div className={styles.container}>
       <h1 className={styles.title}>Browse Projects</h1>
       
@@ -244,5 +248,10 @@ export default function BrowseProjects() {
         </div>
       </div>
     </div>
+    <div style={{ backgroundColor: "#2f3c7e", marginTop: "50px" }}>
+                <Footer />
+      </div>
+    </div>
+
   );
 }

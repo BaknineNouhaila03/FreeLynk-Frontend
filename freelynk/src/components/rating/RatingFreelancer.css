@@ -9,21 +9,15 @@ body, html {
 /* Update the main container */
 .rating-container {
   max-width: 800px;
-  margin: 0;
+  margin: 100px auto; /* vertically and horizontally center-ish */
   padding: 24px;
-  background-color: #e6e6e6;
+  background-color: #f9fafb;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  
-  /* Center positioning styles */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%; /* Use percentage for responsiveness */
-  max-width: 800px;
+  width: 90%;
 }
+
 /* Title styling */
 .rating-title {
   font-size: 24px;

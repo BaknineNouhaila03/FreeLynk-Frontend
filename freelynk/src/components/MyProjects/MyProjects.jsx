@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import styles from './MyProjects.module.css';
 import { Search } from 'lucide-react';
+import NavBar from '../navbar2/Navbar';
+import Footer from '../Footer/Footer';
 
 export default function MyProjects() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -35,6 +37,8 @@ export default function MyProjects() {
   );
 
   return (
+    <div>
+      <NavBar/>
     <div className={styles.container}>
       <h1 className={styles.title}>My Projects</h1>
       
@@ -84,5 +88,10 @@ export default function MyProjects() {
         ))}
       </div>
     </div>
+    <div style={{ backgroundColor: "#2f3c7e", marginTop: "50px" }}>
+                <Footer />
+      </div>
+    </div>
+
   );
 }

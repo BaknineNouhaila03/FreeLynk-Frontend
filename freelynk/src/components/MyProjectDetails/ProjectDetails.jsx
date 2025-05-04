@@ -3,6 +3,8 @@ import { useState } from 'react';
 import styles from './ProjectDetails.module.css';
 import Image from 'next/image';
 import { BookmarkIcon, MapPinIcon, CalendarIcon } from 'lucide-react';
+import NavBar from '../navbar2/Navbar';
+import Footer from '../Footer/Footer';
 
 export default function ProjectDetails() {
   const [activeTab, setActiveTab] = useState('details');
@@ -49,6 +51,8 @@ export default function ProjectDetails() {
   };
 
   return (
+    <div>
+      <NavBar/>
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.projectName}>{projectData.projectName}</h1>
@@ -168,5 +172,10 @@ export default function ProjectDetails() {
         )}
       </div>
     </div>
+    <div style={{ backgroundColor: "#2f3c7e", marginTop: "50px" }}>
+                <Footer />
+      </div>
+    </div>
+
   );
 }
