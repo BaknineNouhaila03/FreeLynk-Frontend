@@ -1,8 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import './Settings.css';
-import NavBar from '../Navbar/Navbar';
-import Modal from './Modal';
+import NavBar from '../navbar2/Navbar';
 
 function Settings() {
   const [formData, setFormData] = useState({

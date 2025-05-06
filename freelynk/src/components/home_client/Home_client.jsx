@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import NavBar from "../Navbar/Navbar";
+import NavBar from "../navbar2/Navbar";
 import Footer from "../Footer/Footer";
 import { FiPlus, FiFolder, FiGlobe } from "react-icons/fi";
 
