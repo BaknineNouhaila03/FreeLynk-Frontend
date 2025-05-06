@@ -6,8 +6,9 @@ import MyProjects from '@/components/MyProjects/MyProjects';
 import ProjectDetails from '@/components/ProjectDetails/ProjectDetails';
 import SavedFreelancers from '@/components/SavedFreelancers/SavedFreelancers';
 import Settings from '@/components/Settings/Settings';
+import ProfilePage from '@/components/signup-freelancer/ProfilePage';
 
 
 export default function IndexPage() {
-  return <ChatInterface/>;
+  return <ProfilePage/>;
 }

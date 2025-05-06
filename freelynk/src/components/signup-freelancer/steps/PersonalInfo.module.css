@@ -1,0 +1,97 @@
+.personalInfoContainer {
+    max-width: 800px;
+  }
+  
+  .sectionTitle {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  .sectionDescription {
+    color: #666;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .mandatoryNote {
+    font-size: 0.85rem;
+    color: #777;
+    text-align: right;
+    margin-bottom: 1.5rem;
+  }
+  
+  .formField {
+    margin-bottom: 2rem;
+  }
+  
+  .label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    position: relative;
+  }
+  
+  .privateTag {
+    font-size: 0.75rem;
+    color: #777;
+    font-weight: normal;
+    margin-left: 0.5rem;
+    font-style: italic;
+  }
+  
+  .fieldHelper {
+    font-size: 0.85rem;
+    color: #777;
+    margin-bottom: 0.75rem;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    background-color: #f5f5f5;
+    color: #333;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #3e56c4;
+  }
+  
+  .nameInputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  .profileImageContainer {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profileImageUpload {
+    width: 100px;
+    height: 100px;
+    background-color: #f5f5f5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  
+  .uploadIcon {
+    color: #777;
+  }
+  
+  .hiddenInput {
+    display: none;
+  }
