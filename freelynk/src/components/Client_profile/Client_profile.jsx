@@ -1,0 +1,72 @@
+import NavBar from "../Navbar/Navbar";
+import React from "react";
+
+export default function ClientCard() {
+  return (
+    <div style={{ backgroundColor: "#e6e6e6", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <NavBar/>
+      <div style={{ position: "absolute", width: "100%", height: "150px", backgroundColor: "#2c3574", top: "calc(50% - 75px)", zIndex: 0 }}></div>
+
+      <div style={{
+        position: "relative",
+        backgroundColor: "#f3f4f3",
+        borderRadius: "10px",
+        width: "350px",
+        height:"400px",
+        padding: "30px",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+        marginTop:"55px",
+        zIndex: 1
+      }}>
+        <div style={{ display: "flex", marginBottom: "20px" }}>
+          {/* Avatar */}
+          <div style={{ marginRight: "20px" }}>
+            <img src="/assets/account.png" style={{
+              width: "100px",
+              height: "100px",
+              borderRadius: "50%",
+            }} alt="Profile" />
+          </div>
+
+          {/* Client Info Section */}
+          <div style={{ textAlign: "left", flex: 1 }}>
+            <h2 style={{ margin: "5px 0", color: "#4b4f54", fontSize: "22px" }}>Client Name</h2>
+            <div style={{ fontWeight: "bold", color: "#4b4f54", marginBottom: "12px" }}>
+              (3.0) <span style={{ color: "#f0c420" }}>★★★☆☆</span>
+            </div>
+            <button style={{
+              backgroundColor: "rgb(47, 60, 126, 0.83)",
+              color: "white",
+              padding: "8px 16px",
+              borderRadius: "8px",
+              border: "none",
+              fontWeight: "bold",
+              cursor: "pointer"
+            }}>
+              Get Verified
+            </button>
+          </div>
+        </div>
+
+        {/* Details Section */}
+        <div style={{ textAlign: "left", borderTop: "1px solid #e5e7eb", paddingTop: "15px",marginTop:"60px" }}>
+          <DetailItem label="Location" value="Rabat, Morocco" />
+          <DetailItem label="Email" value="client@mail.com" />
+          <DetailItem label="Languages" value="English" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DetailItem({ label, value }) {
+  return (
+    <div style={{ marginBottom: "30px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div>
+        <span style={{ color: "#ef9b5e", fontWeight: "bold" }}>{label} : </span>
+        <span style={{ color: "#333" }}>{value}</span>
+      </div>
+      <span style={{ color: "#2c3574", cursor: "pointer", marginLeft: "10px" }}>✎</span>
+    </div>
+  );
+}

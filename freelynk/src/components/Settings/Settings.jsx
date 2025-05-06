@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import './Settings.css';
 import NavBar from '../Navbar/Navbar';
+import Modal from './Modal';
 
 function Settings() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,11 @@ function Settings() {
     newPassword: '',
     confirmPassword: '',
     theme: 'light'
+  });
+
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    actionType: '',
   });
 
   const handleInputChange = (e) => {
@@ -35,21 +41,32 @@ function Settings() {
     alert('Settings saved!');
   };
 
-  const handleDeactivate = () => {
-    if (window.confirm('Are you sure you want to deactivate your account?')) {
-      console.log('Account deactivated');
-    }
+  const openModal = (actionType) => {
+    setModalState({
+      isOpen: true,
+      actionType,
+    });
   };
 
-  const handleDelete = () => {
-    if (window.confirm('Are you sure you want to permanently delete your account? This action cannot be undone.')) {
+  const closeModal = () => {
+    setModalState({
+      isOpen: false,
+      actionType: '',
+    });
+  };
+
+  const handleConfirmAction = () => {
+    if (modalState.actionType === 'deactivate') {
+      console.log('Account deactivated');
+    } else if (modalState.actionType === 'delete') {
       console.log('Account deleted');
     }
+    closeModal();
   };
 
   return (
     <div className="settings-container">
-        <NavBar/>
+      <NavBar/>
       <form onSubmit={handleSave} style={{marginTop:"100px"}}>
         <div className="settings-layout">
           {/* Account Information Section */}
@@ -167,7 +184,7 @@ function Settings() {
                 <button 
                   type="button" 
                   className="deactivate-button" 
-                  onClick={handleDeactivate}
+                  onClick={() => openModal('deactivate')}
                 >
                   Deactivate my account
                 </button>
@@ -179,7 +196,7 @@ function Settings() {
                 <button 
                   type="button" 
                   className="delete-button" 
-                  onClick={handleDelete}
+                  onClick={() => openModal('delete')}
                 >
                   Delete my account
                 </button>
@@ -192,6 +209,14 @@ function Settings() {
           <button type="submit" className="save-button">Save</button>
         </div>
       </form>
+
+      {/* Modal Component */}
+      <Modal 
+        isOpen={modalState.isOpen}
+        onClose={closeModal}
+        onConfirm={handleConfirmAction}
+        actionType={modalState.actionType}
+      />
     </div>
   );
 }
