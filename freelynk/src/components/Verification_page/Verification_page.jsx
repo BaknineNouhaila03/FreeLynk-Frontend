@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from "react";
-import NavBar from "../Navbar/Navbar";
+import NavBar from "../navbar2/Navbar";
 
 export default function VerificationPage() {
   const [backImage, setBackImage] = useState(null);
