@@ -3,6 +3,7 @@ import { useState } from 'react';
 import styles from './ProfilePage.module.css';
 import PersonalInfo from './steps/PersonalInfo';
 import ProfessionalInfo from './steps/ProfessionalInfo';
+import AccountSecurity from './steps/AccountSecurity';
 
 export default function ProfilePage() {
   const [activeStep, setActiveStep] = useState(1);
@@ -50,6 +51,7 @@ export default function ProfilePage() {
 
         {activeStep === 1 && <PersonalInfo />}
         {activeStep === 2 && <ProfessionalInfo />}
+        {activeStep === 3 && <AccountSecurity />}
         
         <div className={styles.buttonContainer}>
           <button className={styles.continueButton} onClick={handleContinue}>

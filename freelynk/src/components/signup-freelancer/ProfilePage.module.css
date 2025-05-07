@@ -6,6 +6,7 @@
     margin: 0 auto;
     padding-right:  60px;
     padding-left:  60px;
+    min-height: 100vh ;
     background-color: white;
   }
   

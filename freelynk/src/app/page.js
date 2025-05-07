@@ -1,4 +1,5 @@
 import AddProject from '@/components/AddProject/AddProject';
+import SignUpForm from '@/components/auth/SignupForm';
 import BrowseProjects from '@/components/BrowseProjects/BrowseProjects';
 import ChatInterface from '@/components/Chat/chat';
 import Home_client from '@/components/home_client/Home_client';
@@ -13,5 +14,5 @@ import ProfilePage from '@/components/signup-freelancer/ProfilePage';
 
 
 export default function IndexPage() {
-  return <ProjectDetailsFreelancer/>;
+  return <ProfilePage/>;
 }

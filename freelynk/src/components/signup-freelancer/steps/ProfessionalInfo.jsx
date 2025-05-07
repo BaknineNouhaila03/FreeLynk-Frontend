@@ -3,205 +3,121 @@ import { useState } from 'react';
 import styles from './ProfessionalInfo.module.css';
 
 export default function ProfessionalInfo() {
-  const [gigThumbnails, setGigThumbnails] = useState([null, null]);
-  const [description, setDescription] = useState('');
-  const [descriptionChars, setDescriptionChars] = useState(0);
-  const [yearsExperience, setYearsExperience] = useState(1);
-  const [location, setLocation] = useState('Morocco');
-  const [languages, setLanguages] = useState([
-    { language: 'English', level: 'Native/Bilingual' }
+  const [occupation, setOccupation] = useState('Graphics & Design');
+  const [skills, setSkills] = useState([
+    { skill: 'Web development', level: 'Intermediate' }
   ]);
+  const [newSkill, setNewSkill] = useState('');
+  const [newSkillLevel, setNewSkillLevel] = useState('Beginner');
+  
+  const [education, setEducation] = useState([]);
+  const [newEducation, setNewEducation] = useState({
+    country: '',
+    university: '',
+    title: '',
+    major: '',
+    year: ''
+  });
 
-  const handleGigThumbnailChange = (index, e) => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const newThumbnails = [...gigThumbnails];
-        newThumbnails[index] = e.target.result;
-        setGigThumbnails(newThumbnails);
-      };
-      reader.readAsDataURL(e.target.files[0]);
+  const [certifications, setCertifications] = useState([]);
+  const [newCertification, setNewCertification] = useState({
+    certificate: '',
+    provider: '',
+    year: ''
+  });
+
+  // Sample options for dropdowns
+  const occupationOptions = [
+    'Graphics & Design',
+    'Web Development',
+    'Digital Marketing',
+    'Writing & Translation',
+    'Video & Animation',
+    'Music & Audio',
+    'Programming & Tech',
+    'Business',
+    'Data'
+  ];
+
+  const skillLevelOptions = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
+  const titleOptions = ['Bachelor', 'Master', 'PhD', 'Associate', 'Certificate'];
+  const yearOptions = Array.from({ length: 50 }, (_, i) => (new Date()).getFullYear() - i);
+
+  const addSkill = () => {
+    if (newSkill.trim()) {
+      setSkills([...skills, { skill: newSkill, level: newSkillLevel }]);
+      setNewSkill('');
+      setNewSkillLevel('Beginner');
     }
   };
 
-  const handleDescriptionChange = (e) => {
-    const text = e.target.value;
-    setDescription(text);
-    setDescriptionChars(text.length);
+  const addEducation = () => {
+    if (newEducation.university && newEducation.major) {
+      setEducation([...education, newEducation]);
+      setNewEducation({
+        country: '',
+        university: '',
+        title: '',
+        major: '',
+        year: ''
+      });
+    }
   };
 
-  // Just for demonstration - in real app would fetch from API
-  const experienceOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, '10+'];
-  const locationOptions = ['Morocco', 'United States', 'France', 'United Kingdom', 'Canada', 'Germany'];
-  const languageLevels = ['Basic', 'Conversational', 'Fluent', 'Native/Bilingual'];
-
-  const addNewLanguage = () => {
-    setLanguages([...languages, { language: '', level: 'Basic' }]);
+  const addCertification = () => {
+    if (newCertification.certificate && newCertification.provider) {
+      setCertifications([...certifications, newCertification]);
+      setNewCertification({
+        certificate: '',
+        provider: '',
+        year: ''
+      });
+    }
   };
 
   return (
     <div className={styles.professionalInfoContainer}>
+      <h2 className={styles.sectionTitle}>Professional Info</h2>
+      <p className={styles.sectionDescription}>
+        This is your time to shine. Let potential buyers know what you do 
+        best and how you gained your skills, certifications and 
+        experience.
+      </p>
+      <p className={styles.mandatoryNote}>* Mandatory fields</p>
+
+      {/* Occupation Section */}
       <div className={styles.formField}>
-        <label className={styles.label}>Gig thumbnails*</label>
-        <p className={styles.fieldHelper}>
-          Add a high-quality gig thumbnail to visually showcase your service and 
-          grab buyers' attention instantly.
-        </p>
-        <div className={styles.thumbnailContainer}>
-          {gigThumbnails.map((thumbnail, index) => (
-            <div
-              key={index}
-              className={styles.thumbnailUpload}
-              onClick={() => document.getElementById(`thumbnailInput${index}`).click()}
-              style={{ backgroundImage: thumbnail ? `url(${thumbnail})` : 'none' }}
-            >
-              {!thumbnail && (
-                <div className={styles.uploadIcon}>
-                  {index === 0 ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-                      <circle cx="12" cy="13" r="4" />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19" />
-                      <line x1="5" y1="12" x2="19" y2="12" />
-                    </svg>
-                  )}
-                </div>
-              )}
-              <input
-                id={`thumbnailInput${index}`}
-                type="file"
-                accept="image/*"
-                className={styles.hiddenInput}
-                onChange={(e) => handleGigThumbnailChange(index, e)}
-              />
-            </div>
-          ))}
+        <label className={styles.label}>Your Occupation*</label>
+        <div className={styles.selectContainer}>
+          <select
+            className={styles.select}
+            value={occupation}
+            onChange={(e) => setOccupation(e.target.value)}
+          >
+            {occupationOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          <div className={styles.selectArrow}></div>
         </div>
       </div>
 
+      {/* Skills Section */}
       <div className={styles.formField}>
-        <label className={styles.label}>Description*</label>
-        <textarea
-          className={styles.textarea}
-          placeholder="Share a bit about your work experience, cool projects you've completed, and your area of expertise."
-          value={description}
-          onChange={handleDescriptionChange}
-          maxLength={600}
-        ></textarea>
-        <div className={styles.charCount}>
-          <span className={styles.minChars}>min. 150 characters</span>
-          <span>{descriptionChars} / 600</span>
-        </div>
-      </div>
-
-      <div className={styles.twoColumnGrid}>
-        <div className={styles.formField}>
-          <label className={styles.label}>Years of Experience*</label>
-          <div className={styles.selectContainer}>
-            <select
-              className={styles.select}
-              value={yearsExperience}
-              onChange={(e) => setYearsExperience(e.target.value)}
-            >
-              {experienceOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-            <div className={styles.selectArrow}></div>
-          </div>
-        </div>
-
-        <div className={styles.formField}>
-          <label className={styles.label}>Location*</label>
-          <div className={styles.selectContainer}>
-            <select
-              className={styles.select}
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-            >
-              {locationOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-            <div className={styles.selectArrow}></div>
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.formField}>
-        <label className={styles.label}>Languages*</label>
-        <p className={styles.fieldHelper}>
-          Select which languages you can communicate in and your proficiency level.
-        </p>
-
-        <div className={styles.languageTableHeader}>
-          <div>Language</div>
+        <label className={styles.label}>Skills*</label>
+        
+        <div className={styles.skillTableHeader}>
+          <div>Skill</div>
           <div>Level</div>
           <div></div>
         </div>
 
-        {languages.map((lang, index) => (
-          <div key={index} className={styles.languageRow}>
-            <div className={styles.languageCol}>
-              <input
-                type="text"
-                className={styles.input}
-                value={lang.language}
-                onChange={(e) => {
-                  const newLanguages = [...languages];
-                  newLanguages[index].language = e.target.value;
-                  setLanguages(newLanguages);
-                }}
-                placeholder="Language"
-              />
-            </div>
-            <div className={styles.levelCol}>
-              <div className={styles.selectContainer}>
-                <select
-                  className={styles.select}
-                  value={lang.level}
-                  onChange={(e) => {
-                    const newLanguages = [...languages];
-                    newLanguages[index].level = e.target.value;
-                    setLanguages(newLanguages);
-                  }}
-                >
-                  {languageLevels.map((level) => (
-                    <option key={level} value={level}>
-                      {level}
-                    </option>
-                  ))}
-                </select>
-                <div className={styles.selectArrow}></div>
-              </div>
-            </div>
+        {skills.map((skill, index) => (
+          <div key={index} className={styles.skillRow}>
+            <div>{skill.skill}</div>
+            <div>{skill.level}</div>
             <div className={styles.editCol}>
               <button className={styles.editButton}>
                 <svg
@@ -223,9 +139,179 @@ export default function ProfessionalInfo() {
           </div>
         ))}
 
-        <button className={styles.addButton} onClick={addNewLanguage}>
-          Add New
-        </button>
+        <div className={styles.addSkillRow}>
+          <input
+            type="text"
+            className={styles.input}
+            placeholder="Add a skill"
+            value={newSkill}
+            onChange={(e) => setNewSkill(e.target.value)}
+          />
+          <div className={styles.selectContainer}>
+            <select
+              className={styles.select}
+              value={newSkillLevel}
+              onChange={(e) => setNewSkillLevel(e.target.value)}
+            >
+              {skillLevelOptions.map((level) => (
+                <option key={level} value={level}>
+                  {level}
+                </option>
+              ))}
+            </select>
+            <div className={styles.selectArrow}></div>
+          </div>
+          <button className={styles.addButton} onClick={addSkill}>
+            Add
+          </button>
+        </div>
+      </div>
+
+      {/* Education Section */}
+      <div className={styles.sectionDivider}></div>
+      <div className={styles.formField}>
+        <h3 className={styles.subSectionTitle}>Education</h3>
+        
+        {education.map((edu, index) => (
+          <div key={index} className={styles.educationItem}>
+            <div className={styles.eduHeader}>
+              <span className={styles.eduDegree}>{edu.title} in {edu.major}</span>
+              <span className={styles.eduYear}>{edu.year}</span>
+            </div>
+            <div className={styles.eduUniversity}>{edu.university}, {edu.country}</div>
+          </div>
+        ))}
+
+        <div className={styles.addEducationForm}>
+          <div className={styles.twoColumnGrid}>
+            <div className={styles.selectContainer}>
+              <select
+                className={styles.select}
+                value={newEducation.country}
+                onChange={(e) => setNewEducation({...newEducation, country: e.target.value})}
+              >
+                <option value="" disabled>Country of College/University</option>
+                <option value="United States">United States</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+                <option value="Germany">Germany</option>
+                <option value="France">France</option>
+                <option value="Morocco">Morocco</option>
+                {/* Add more countries as needed */}
+              </select>
+              <div className={styles.selectArrow}></div>
+            </div>
+            
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="College/University Name"
+              value={newEducation.university}
+              onChange={(e) => setNewEducation({...newEducation, university: e.target.value})}
+            />
+          </div>
+
+          <div className={styles.threeColumnGrid}>
+            <div className={styles.selectContainer}>
+              <select
+                className={styles.select}
+                value={newEducation.title}
+                onChange={(e) => setNewEducation({...newEducation, title: e.target.value})}
+              >
+                <option value="" disabled>Title</option>
+                {titleOptions.map((title) => (
+                  <option key={title} value={title}>{title}</option>
+                ))}
+              </select>
+              <div className={styles.selectArrow}></div>
+            </div>
+            
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="Major"
+              value={newEducation.major}
+              onChange={(e) => setNewEducation({...newEducation, major: e.target.value})}
+            />
+            
+            <div className={styles.selectContainer}>
+              <select
+                className={styles.select}
+                value={newEducation.year}
+                onChange={(e) => setNewEducation({...newEducation, year: e.target.value})}
+              >
+                <option value="" disabled>Year</option>
+                {yearOptions.map((year) => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
+              </select>
+              <div className={styles.selectArrow}></div>
+            </div>
+          </div>
+          
+          <button className={styles.grayAddButton} onClick={addEducation}>
+            Add
+          </button>
+        </div>
+      </div>
+
+      {/* Certification Section */}
+      <div className={styles.sectionDivider}></div>
+      <div className={styles.formField}>
+        <h3 className={styles.subSectionTitle}>Certification</h3>
+        <p className={styles.fieldHelper}>
+          Include any certificates or awards that are relevant to the services you're offering.
+        </p>
+        
+        {certifications.map((cert, index) => (
+          <div key={index} className={styles.certItem}>
+            <div className={styles.certTitle}>{cert.certificate}</div>
+            <div className={styles.certDetails}>
+              {cert.provider} • {cert.year}
+            </div>
+          </div>
+        ))}
+
+        <div className={styles.addCertForm}>
+          <div className={styles.twoColumnGrid}>
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="Certificate or Award"
+              value={newCertification.certificate}
+              onChange={(e) => setNewCertification({...newCertification, certificate: e.target.value})}
+            />
+            
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="Certified From (e.g. Adobe)"
+              value={newCertification.provider}
+              onChange={(e) => setNewCertification({...newCertification, provider: e.target.value})}
+            />
+          </div>
+
+          <div className={styles.certYearButtonRow}>
+            <div className={styles.selectContainer} style={{ width: '150px' }}>
+              <select
+                className={styles.select}
+                value={newCertification.year}
+                onChange={(e) => setNewCertification({...newCertification, year: e.target.value})}
+              >
+                <option value="" disabled>Year</option>
+                {yearOptions.map((year) => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
+              </select>
+              <div className={styles.selectArrow}></div>
+            </div>
+            
+            <button className={styles.grayAddButton} onClick={addCertification}>
+              Add
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
