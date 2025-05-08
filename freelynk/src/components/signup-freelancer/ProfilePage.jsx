@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './ProfilePage.module.css';
 import PersonalInfo from './steps/PersonalInfo';
 import ProfessionalInfo from './steps/ProfessionalInfo';
@@ -8,22 +8,49 @@ import AccountSecurity from './steps/AccountSecurity';
 export default function ProfilePage() {
   const [activeStep, setActiveStep] = useState(1);
   const [completionRate, setCompletionRate] = useState(30);
+  const [stepsValidation, setStepsValidation] = useState({
+    step1: false,
+    step2: true, // Assume these are valid by default for this example
+    step3: false  // Changed to false since we now validate this step
+  });
+
+  // Update completion rate when steps validation changes
+  useEffect(() => {
+    calculateCompletionRate();
+  }, [stepsValidation]);
+
+  const calculateCompletionRate = () => {
+    const validSteps = Object.values(stepsValidation).filter(Boolean).length;
+    const totalSteps = Object.keys(stepsValidation).length;
+    const newCompletionRate = Math.round((validSteps / totalSteps) * 100);
+    setCompletionRate(newCompletionRate);
+  };
 
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
 
   const handleContinue = () => {
-    if (activeStep < 3) {
+    if (activeStep < 3 && isCurrentStepValid()) {
       setActiveStep(activeStep + 1);
-      setCompletionRate(completionRate + 35);
     }
+  };
+
+  const handleStepValidation = (step, isValid) => {
+    setStepsValidation(prev => ({
+      ...prev,
+      [`step${step}`]: isValid
+    }));
+  };
+
+  const isCurrentStepValid = () => {
+    return stepsValidation[`step${activeStep}`];
   };
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-      <img src='images/image.png' className={styles.logo}></img>
+        <img src='images/image.png' className={styles.logo} alt="Logo" />
       </header>
       
       <main className={styles.main}>
@@ -49,13 +76,17 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {activeStep === 1 && <PersonalInfo />}
-        {activeStep === 2 && <ProfessionalInfo />}
-        {activeStep === 3 && <AccountSecurity />}
+        {activeStep === 1 && <PersonalInfo onValidationChange={(isValid) => handleStepValidation(1, isValid)} />}
+        {activeStep === 2 && <ProfessionalInfo onValidationChange={(isValid) => handleStepValidation(2, isValid)} />}
+        {activeStep === 3 && <AccountSecurity onValidationChange={(isValid) => handleStepValidation(3, isValid)} />}
         
         <div className={styles.buttonContainer}>
-          <button className={styles.continueButton} onClick={handleContinue}>
-            Continue
+          <button 
+            className={isCurrentStepValid() ? styles.continueButton : `${styles.continueButton} ${styles.disabledButton}`} 
+            onClick={handleContinue}
+            disabled={!isCurrentStepValid()}
+          >
+            {activeStep < 3 ? 'Continue' : 'Submit'}
           </button>
         </div>
       </main>

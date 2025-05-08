@@ -1,12 +1,10 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './ProfessionalInfo.module.css';
 
-export default function ProfessionalInfo() {
+export default function ProfessionalInfo({ onValidationChange }) {
   const [occupation, setOccupation] = useState('Graphics & Design');
-  const [skills, setSkills] = useState([
-    { skill: 'Web development', level: 'Intermediate' }
-  ]);
+  const [skills, setSkills] = useState([]);
   const [newSkill, setNewSkill] = useState('');
   const [newSkillLevel, setNewSkillLevel] = useState('Beginner');
   
@@ -43,12 +41,26 @@ export default function ProfessionalInfo() {
   const titleOptions = ['Bachelor', 'Master', 'PhD', 'Associate', 'Certificate'];
   const yearOptions = Array.from({ length: 50 }, (_, i) => (new Date()).getFullYear() - i);
 
+  // Check if mandatory fields are filled and update parent component
+  useEffect(() => {
+    const isValid = occupation && skills.length > 0;
+    if (onValidationChange) {
+      onValidationChange(isValid);
+    }
+  }, [occupation, skills, onValidationChange]);
+
   const addSkill = () => {
     if (newSkill.trim()) {
       setSkills([...skills, { skill: newSkill, level: newSkillLevel }]);
       setNewSkill('');
       setNewSkillLevel('Beginner');
     }
+  };
+
+  const removeSkill = (index) => {
+    const updatedSkills = [...skills];
+    updatedSkills.splice(index, 1);
+    setSkills(updatedSkills);
   };
 
   const addEducation = () => {
@@ -107,6 +119,9 @@ export default function ProfessionalInfo() {
       {/* Skills Section */}
       <div className={styles.formField}>
         <label className={styles.label}>Skills*</label>
+        {skills.length === 0 && (
+          <p className={styles.validationError}>Please add at least one skill</p>
+        )}
         
         <div className={styles.skillTableHeader}>
           <div>Skill</div>
@@ -119,7 +134,11 @@ export default function ProfessionalInfo() {
             <div>{skill.skill}</div>
             <div>{skill.level}</div>
             <div className={styles.editCol}>
-              <button className={styles.editButton}>
+              <button 
+                className={styles.editButton}
+                onClick={() => removeSkill(index)}
+                title="Remove skill"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -131,8 +150,11 @@ export default function ProfessionalInfo() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 >
-                  <path d="M12 20h9"></path>
-                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                  <path d="M3 6h18"></path>
+                  <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6"></path>
+                  <path d="M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"></path>
+                  <line x1="10" y1="11" x2="10" y2="17"></line>
+                  <line x1="14" y1="11" x2="14" y2="17"></line>
                 </svg>
               </button>
             </div>

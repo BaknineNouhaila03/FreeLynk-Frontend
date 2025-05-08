@@ -1,8 +1,8 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './AccountSecurity.module.css';
 
-export default function AccountSecurity() {
+export default function AccountSecurity({ onValidationChange }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -11,6 +11,19 @@ export default function AccountSecurity() {
   const [isPhoneAdded, setIsPhoneAdded] = useState(false);
   const [passwordError, setPasswordError] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [formValid, setFormValid] = useState(false);
+
+  // Validate form on any relevant input change
+  useEffect(() => {
+    validateForm();
+  }, [email, password, confirmPassword]);
+
+  // Report validation status to parent component
+  useEffect(() => {
+    if (onValidationChange) {
+      onValidationChange(formValid);
+    }
+  }, [formValid, onValidationChange]);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -51,16 +64,32 @@ export default function AccountSecurity() {
   const validateForm = () => {
     let isValid = true;
 
-    if (!validateEmail(email)) {
+    // Email validation
+    if (!email) {
+      setEmailError('Email is required');
+      isValid = false;
+    } else if (!validateEmail(email)) {
       setEmailError('Please enter a valid email address');
       isValid = false;
+    } else {
+      setEmailError('');
     }
 
-    if (password !== confirmPassword) {
+    // Password validation
+    if (!password) {
+      setPasswordError('Password is required');
+      isValid = false;
+    } else if (password.length < 8) {
+      setPasswordError('Password must be at least 8 characters');
+      isValid = false;
+    } else if (password !== confirmPassword) {
       setPasswordError('Passwords do not match');
       isValid = false;
+    } else {
+      setPasswordError('');
     }
 
+    setFormValid(isValid);
     return isValid;
   };
 
@@ -91,15 +120,16 @@ export default function AccountSecurity() {
               <polyline points="22,6 12,13 2,6"></polyline>
             </svg>
           </span>
-          Email 
+          Email <span className={styles.requiredField}>*</span>
           <span className={styles.privateTag}>Private</span>
         </label>
         <input 
           type="email" 
           placeholder="Enter Email address" 
-          className={styles.input} 
+          className={`${styles.input} ${emailError ? styles.inputError : ''}`} 
           value={email}
           onChange={handleEmailChange}
+          required
         />
         {emailError && <p className={styles.errorText}>{emailError}</p>}
       </div>
@@ -124,15 +154,16 @@ export default function AccountSecurity() {
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
               </svg>
             </span>
-            Password
+            Password <span className={styles.requiredField}>*</span>
           </label>
           <div className={styles.passwordInputWrapper}>
             <input 
               type={showPassword ? "text" : "password"} 
               placeholder="Enter Password" 
-              className={styles.input} 
+              className={`${styles.input} ${passwordError ? styles.inputError : ''}`} 
               value={password}
               onChange={handlePasswordChange}
+              required
             />
             <button 
               type="button" 
@@ -168,13 +199,16 @@ export default function AccountSecurity() {
         </div>
 
         <div className={styles.passwordField}>
-          <label className={styles.label}>Confirm Password</label>
+          <label className={styles.label}>
+            Confirm Password <span className={styles.requiredField}>*</span>
+          </label>
           <input 
             type="password" 
             placeholder="Repeat Password" 
-            className={styles.input} 
+            className={`${styles.input} ${passwordError ? styles.inputError : ''}`} 
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
+            required
           />
         </div>
       </div>
