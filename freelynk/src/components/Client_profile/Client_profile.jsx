@@ -1,4 +1,4 @@
-import NavBar from "../Navbar/Navbar";
+import NavBar from "../navbar2/Navbar";
 import React from "react";
 
 export default function ClientCard() {
