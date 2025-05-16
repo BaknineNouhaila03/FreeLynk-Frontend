@@ -3,33 +3,31 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import styles from '../NavBar.module.css';
-import { LogOut, Settings, User, s } from "lucide-react";
+import { LogOut, Settings, User, Menu, X } from "lucide-react";
 import { FiSearch } from "react-icons/fi";
-import { IoMdVolumeMute } from "react-icons/io";
+import { IoMdVolumeMute, IoMdNotificationsOutline } from "react-icons/io";
 import { AiOutlineHome } from "react-icons/ai";
-import { IoMdNotificationsOutline } from "react-icons/io";
-import { BsChatDots } from "react-icons/bs";
-import { BsBookmarkFill } from "react-icons/bs";
+import { BsChatDots, BsBookmarkFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 
 export default function NavBar() {
     const [scrolled, setScrolled] = useState(false);
     const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
     const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const notifRef = useRef();
     const profileRef = useRef();
+    const mobileMenuRef = useRef();
 
     useEffect(() => {
         const handleScroll = () => {
             const isScrolled = window.scrollY > 50;
-            if (isScrolled !== scrolled) {
-                setScrolled(isScrolled);
-            }
+            setScrolled(isScrolled);
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [scrolled]);
+    }, []);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -39,13 +37,21 @@ export default function NavBar() {
             if (profileRef.current && !profileRef.current.contains(event.target)) {
                 setShowProfileDropdown(false);
             }
+            if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target) && 
+                !event.target.classList.contains(styles.hamburger)) {
+                setMobileMenuOpen(false);
+            }
         };
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
+    const toggleMobileMenu = () => {
+        setMobileMenuOpen(prev => !prev);
+    };
+
     return (
-        <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`} style={{ backgroundColor: "#e6e6e6" }}>
+        <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`} style={{backgroundColor:"#e4e5e7"}}>
             <div className={styles.logo}>
                 <Link href="/">
                     <img src="/assets/FreeLynk.png" alt="Logo" />
@@ -60,20 +66,41 @@ export default function NavBar() {
                     className={styles.searchInput}
                 />
             </div>
-            <ul className={styles.iconNav}>
-                <li><Link href="/"><AiOutlineHome size={24} /></Link></li>
+
+            <button 
+                className={styles.hamburger} 
+                onClick={toggleMobileMenu}
+                aria-label="Toggle menu"
+            >
+                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+
+            <ul className={`${styles.iconNav} ${mobileMenuOpen ? styles.mobileActive : ''}`} ref={mobileMenuRef}>
+                <li>
+                    <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+                        <div className={styles.navItem}>
+                            <AiOutlineHome size={24} />
+                            <span className={styles.navLabel}>Home</span>
+                        </div>
+                    </Link>
+                </li>
 
                 <li style={{ position: 'relative' }} ref={notifRef}>
-                    <button onClick={() => setShowNotificationDropdown(prev => !prev)} className={styles.iconButton}>
-                        <IoMdNotificationsOutline size={24} style={{color:"#535354"}}/>
-                        <span className={styles.notificationDot}></span>
+                    <button 
+                        onClick={() => setShowNotificationDropdown(prev => !prev)} 
+                        className={styles.iconButton}
+                    >
+                        <div className={styles.navItem}>
+                            <IoMdNotificationsOutline size={24} style={{ color: "#535354" }} />
+                            <span className={styles.notificationDot}></span>
+                            <span className={styles.navLabel}>Notifications</span>
+                        </div>
                     </button>
                     {showNotificationDropdown && (
                         <div className={styles.dropdownMenu}>
                             <div className={styles.dropdownContent}>
                                 <p style={{ color: "grey" }}>Notifications</p>
                             </div>
-
                             <div className={styles.dropdownFooter}>
                                 <IoMdVolumeMute style={{ marginRight: '8px' }} />
                                 <span style={{ color: "grey" }}>Mute notifications</span>
@@ -82,69 +109,62 @@ export default function NavBar() {
                     )}
                 </li>
 
-                <li><Link href="/messages"><BsChatDots size={22} /></Link></li>
-                <li><Link href="/saved"><BsBookmarkFill size={20} /></Link></li>
+                <li>
+                    <Link href="/messages" onClick={() => setMobileMenuOpen(false)}>
+                        <div className={styles.navItem}>
+                            <BsChatDots size={22} />
+                            <span className={styles.navLabel}>Messages</span>
+                        </div>
+                    </Link>
+                </li>
+                
+                <li>
+                    <Link href="/saved" onClick={() => setMobileMenuOpen(false)}>
+                        <div className={styles.navItem}>
+                            <BsBookmarkFill size={20} />
+                            <span className={styles.navLabel}>Saved</span>
+                        </div>
+                    </Link>
+                </li>
 
                 <li style={{ position: 'relative' }} ref={profileRef}>
                     <button onClick={() => setShowProfileDropdown(prev => !prev)} className={styles.iconButton}>
-                        <FaUser size={20} color='#535354'/>
+                        <div className={styles.navItem}>
+                            <FaUser size={20} color='#535354' />
+                            <span className={styles.navLabel}>Profile</span>
+                        </div>
                     </button>
                     {showProfileDropdown && (
-                       <div className={styles.dropdownMenuProfile} style={{ width: "140px", padding: "10px" ,marginTop:"10px"}}>
-  
-                       {/* Profile Link */}
-                       <div style={{ 
-                         display: "flex", 
-                         justifyContent: "space-between", 
-                         alignItems: "center", 
-                         marginBottom: "10px", 
-                         borderBottom: "0.5px  #535354", 
-                         paddingBottom: "6px" 
-                       }}>
-                         <Link href="/profile" style={{ fontSize: "16px", color: "#535354", textDecoration: "none" }}>
-                           Profile
-                         </Link>
-                         <User size={20} color="#535354" />
-                       </div>
-                     
-                       {/* Settings Link */}
-                       <div style={{ 
-                         display: "flex", 
-                         justifyContent: "space-between", 
-                         alignItems: "center", 
-                         marginBottom: "10px" ,
-                         paddingBottom: "6px" 
-
-                       }}>
-                         <Link href="/settings" style={{ fontSize: "16px", color: "#535354", textDecoration: "none" }}>
-                           Settings
-                         </Link>
-                         <Settings size={20} color="#535354" />
-                       </div>
-                     
-                       {/* Logout Button */}
-                       <div style={{ 
-                         display: "flex", 
-                         justifyContent: "space-between", 
-                         alignItems: "center" 
-                       }}>
-                         <button 
-                           onClick={() => alert("Logout")} 
-                           style={{ 
-                             fontSize: "16px", 
-                             border: "none", 
-                             background: "transparent", 
-                             color: "#535354", 
-                             cursor: "pointer", 
-                             padding: "0" 
-                           }}
-                         >
-                           Logout
-                         </button>
-                         <LogOut size={20} color="#535354" />
-                       </div>
-                     </div>
-                     
+                        <div className={styles.dropdownMenuProfile}>
+                            <div className={styles.profileItem}>
+                                <Link href="/profile" onClick={() => {
+                                    setShowProfileDropdown(false);
+                                    setMobileMenuOpen(false);
+                                }}>
+                                    Profile
+                                </Link>
+                                <User size={20} />
+                            </div>
+                            <div className={styles.profileItem}>
+                                <Link href="/settings" onClick={() => {
+                                    setShowProfileDropdown(false);
+                                    setMobileMenuOpen(false);
+                                }}>
+                                    Settings
+                                </Link>
+                                <Settings size={20} />
+                            </div>
+                            <div className={styles.profileItem}>
+                                <button onClick={() => {
+                                    alert("Logout");
+                                    setShowProfileDropdown(false);
+                                    setMobileMenuOpen(false);
+                                }}>
+                                    Logout
+                                </button>
+                                <LogOut size={20} />
+                            </div>
+                        </div>
                     )}
                 </li>
             </ul>
