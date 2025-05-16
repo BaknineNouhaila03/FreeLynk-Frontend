@@ -2,7 +2,7 @@
 
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer/Footer';
-import styles from '@/components/home/Home.module.css';
+import styles from './Home.module.css';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
