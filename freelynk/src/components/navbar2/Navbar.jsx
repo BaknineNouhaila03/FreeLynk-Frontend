@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import styles from '../NavBar.module.css';
-import { LogOut, Settings, User, Menu, X } from "lucide-react";
+import { LogOut, User, Menu, X } from "lucide-react";
 import { FiSearch } from "react-icons/fi";
 import { IoMdVolumeMute, IoMdNotificationsOutline } from "react-icons/io";
 import { AiOutlineHome } from "react-icons/ai";
@@ -146,13 +146,7 @@ export default function NavBar() {
                                 <User size={20} />
                             </div>
                             <div className={styles.profileItem}>
-                                <Link href="/settings" onClick={() => {
-                                    setShowProfileDropdown(false);
-                                    setMobileMenuOpen(false);
-                                }}>
-                                    Settings
-                                </Link>
-                                <Settings size={20} />
+                                
                             </div>
                             <div className={styles.profileItem}>
                                 <button onClick={() => {
