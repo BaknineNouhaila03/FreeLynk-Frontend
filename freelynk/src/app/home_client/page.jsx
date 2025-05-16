@@ -3,6 +3,8 @@ import { useState } from "react";
 import NavBar from "../../components/navbar2/Navbar";
 import Footer from "../../components/Footer/Footer";
 import { FiPlus, FiFolder, FiGlobe } from "react-icons/fi";
+import { useRouter } from 'next/navigation'
+import Link from "next/link";
 
 export default function Home_client() {
     const freelancers = Array.from({ length: 5 }, (_, i) => ({
@@ -77,15 +79,26 @@ const HeaderSection = () => (
 );
 
 const ActionButtons = () => {
+    const router = useRouter();
+
     const buttons = [
-        { icon: <FiPlus />, label: "Add a new project" },
-        { icon: <FiGlobe />, label: "My Projects" }
+        { icon: <FiPlus />, label: "Add a new project", path: "/AddProject" },
+        { icon: <FiGlobe />, label: "My Projects", path: "/MyProjects" }
     ];
+
     return (
-        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "100px", marginTop: "-25px", height: "40px" }}>
+        <div style={{
+            display: "flex",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            gap: "100px",
+            marginTop: "-25px",
+            height: "40px"
+        }}>
             {buttons.map((btn, index) => (
                 <button
                     key={index}
+                    onClick={() => router.push(btn.path)}
                     style={{
                         display: "flex",
                         alignItems: "center",
@@ -111,9 +124,7 @@ const ActionButtons = () => {
             ))}
         </div>
     );
-    
 };
-
 const Section = ({ title, freelancers }) => (
     <div style={{ marginTop: "40px" }}>
         <h2 style={{ fontSize: "24px", fontWeight: "800", marginBottom: "20px", color: "#4a4a4a" }}>{title}</h2>

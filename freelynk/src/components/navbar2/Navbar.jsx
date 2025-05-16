@@ -77,7 +77,7 @@ export default function NavBar() {
 
             <ul className={`${styles.iconNav} ${mobileMenuOpen ? styles.mobileActive : ''}`} ref={mobileMenuRef}>
                 <li>
-                    <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+                    <Link href="/home_client" onClick={() => setMobileMenuOpen(false)}>
                         <div className={styles.navItem}>
                             <AiOutlineHome size={24} />
                             <span className={styles.navLabel}>Home</span>
@@ -92,7 +92,6 @@ export default function NavBar() {
                     >
                         <div className={styles.navItem}>
                             <IoMdNotificationsOutline size={24} style={{ color: "#535354" }} />
-                            <span className={styles.notificationDot}></span>
                             <span className={styles.navLabel}>Notifications</span>
                         </div>
                     </button>
@@ -110,7 +109,7 @@ export default function NavBar() {
                 </li>
                 
                 <li>
-                    <Link href="/saved" onClick={() => setMobileMenuOpen(false)}>
+                    <Link href="/SavedFreelancers" onClick={() => setMobileMenuOpen(false)}>
                         <div className={styles.navItem}>
                             <BsBookmarkFill size={20} />
                             <span className={styles.navLabel}>Saved</span>
@@ -128,7 +127,7 @@ export default function NavBar() {
                     {showProfileDropdown && (
                         <div className={styles.dropdownMenuProfile}>
                             <div className={styles.profileItem}>
-                                <Link href="/profile" onClick={() => {
+                                <Link href="/Client_profile" onClick={() => {
                                     setShowProfileDropdown(false);
                                     setMobileMenuOpen(false);
                                 }}>
