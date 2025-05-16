@@ -1,159 +1,108 @@
-"use client";
+"use client"
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import styles from '../NavBar.module.css';
-import { LogOut, Settings, User, Menu, X } from "lucide-react";
-import { FiSearch } from "react-icons/fi";
-import { IoMdVolumeMute, IoMdNotificationsOutline } from "react-icons/io";
-import { AiOutlineHome } from "react-icons/ai";
-import { BsChatDots, BsBookmarkFill } from "react-icons/bs";
-import { FaUser } from "react-icons/fa";
+import styles from './NavBar.module.css';
 
 export default function NavBar() {
+    // State to track if navbar should be transparent or solid
     const [scrolled, setScrolled] = useState(false);
-    const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
-    const [showProfileDropdown, setShowProfileDropdown] = useState(false);
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-    const notifRef = useRef();
-    const profileRef = useRef();
-    const mobileMenuRef = useRef();
-
+    
+    // Handle scroll event to change navbar style
     useEffect(() => {
         const handleScroll = () => {
             const isScrolled = window.scrollY > 50;
-            setScrolled(isScrolled);
+            if (isScrolled !== scrolled) {
+                setScrolled(isScrolled);
+            }
         };
+        
         window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (notifRef.current && !notifRef.current.contains(event.target)) {
-                setShowNotificationDropdown(false);
-            }
-            if (profileRef.current && !profileRef.current.contains(event.target)) {
-                setShowProfileDropdown(false);
-            }
-            if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target) && 
-                !event.target.classList.contains(styles.hamburger)) {
-                setMobileMenuOpen(false);
-            }
+        
+        // Clean up
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
         };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
-
-    const toggleMobileMenu = () => {
-        setMobileMenuOpen(prev => !prev);
+    }, [scrolled]);
+    
+    // Function to handle smooth scrolling to sections
+    const scrollToSection = (e, sectionId) => {
+        e.preventDefault();
+        
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     return (
-        <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`} style={{backgroundColor:"#e4e5e7"}}>
+        <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
             <div className={styles.logo}>
                 <Link href="/">
-                    <img src="/assets/FreeLynk.png" alt="Logo" />
+                    <img src="/images/logo.png" alt="Logo" />
                 </Link>
             </div>
-
-            <div className={styles.searchContainer}>
-                <FiSearch className={styles.searchIcon} />
-                <input
-                    type="text"
-                    placeholder="What service are you looking for today ?"
-                    className={styles.searchInput}
-                />
-            </div>
-
-            <button 
-                className={styles.hamburger} 
-                onClick={toggleMobileMenu}
-                aria-label="Toggle menu"
-            >
-                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-
-            <ul className={`${styles.iconNav} ${mobileMenuOpen ? styles.mobileActive : ''}`} ref={mobileMenuRef}>
+      
+            <ul className={styles.navLinks}>
                 <li>
-<Link href="/home_client">
-  <div className={styles.navItem} onClick={() => setMobileMenuOpen(false)}>
-    <AiOutlineHome size={24} />
-    <span className={styles.navLabel}>Home</span>
-  </div>
-</Link>
-
-                </li>
-
-                <li style={{ position: 'relative' }} ref={notifRef}>
-                    <button 
-                        onClick={() => setShowNotificationDropdown(prev => !prev)} 
-                        className={styles.iconButton}
+                    <a 
+                        href="#about" 
+                        onClick={(e) => scrollToSection(e, 'about')}
                     >
-                        <div className={styles.navItem}>
-                            <IoMdNotificationsOutline size={24} style={{ color: "#535354" }} />
-                            <span className={styles.notificationDot}></span>
-                            <span className={styles.navLabel}>Notifications</span>
-                        </div>
-                    </button>
-                    {showNotificationDropdown && (
-                        <div className={styles.dropdownMenu}>
-                            <div className={styles.dropdownContent}>
-                                <p style={{ color: "grey" }}>Notifications</p>
-                            </div>
-                            <div className={styles.dropdownFooter}>
-                                <IoMdVolumeMute style={{ marginRight: '8px' }} />
-                                <span style={{ color: "grey" }}>Mute notifications</span>
-                            </div>
-                        </div>
-                    )}
+                        About
+                    </a>
                 </li>
-
-
-                
                 <li>
-                    <Link href="/saved" onClick={() => setMobileMenuOpen(false)}>
-                        <div className={styles.navItem}>
-                            <BsBookmarkFill size={20} />
-                            <span className={styles.navLabel}>Saved</span>
-                        </div>
-                    </Link>
+                    <a 
+                        href="#categories" 
+                        onClick={(e) => scrollToSection(e, 'categories')}
+                    >
+                        Categories
+                    </a>
                 </li>
-
-                <li style={{ position: 'relative' }} ref={profileRef}>
-                    <button onClick={() => setShowProfileDropdown(prev => !prev)} className={styles.iconButton}>
-                        <div className={styles.navItem}>
-                            <FaUser size={20} color='#535354' />
-                            <span className={styles.navLabel}>Profile</span>
-                        </div>
-                    </button>
-                    {showProfileDropdown && (
-                        <div className={styles.dropdownMenuProfile}>
-                            <div className={styles.profileItem}>
-                                <Link href="/profile" onClick={() => {
-                                    setShowProfileDropdown(false);
-                                    setMobileMenuOpen(false);
-                                }}>
-                                    Profile
-                                </Link>
-                                <User size={20} />
-                            </div>
-    
-                            <div className={styles.profileItem}>
-                                <button onClick={() => {
-                                    alert("Logout");
-                                    setShowProfileDropdown(false);
-                                    setMobileMenuOpen(false);
-                                }}>
-                                    Logout
-                                </button>
-                                <LogOut size={20} />
-                            </div>
-                        </div>
-                    )}
+                <li>
+                    <a 
+                        href="#contact" 
+                        onClick={(e) => scrollToSection(e, 'contact')}
+                    >
+                        Contact
+                    </a>
                 </li>
             </ul>
+            
+            {/* Mobile menu toggle button */}
+            <div className={styles.menuToggle}>
+                <input type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+                <ul className={styles.mobileMenu}>
+                    <li>
+                        <a 
+                            href="#about" 
+                            onClick={(e) => scrollToSection(e, 'about')}
+                        >
+                            About
+                        </a>
+                    </li>
+                    <li>
+                        <a 
+                            href="#categories" 
+                            onClick={(e) => scrollToSection(e, 'categories')}
+                        >
+                            Categories
+                        </a>
+                    </li>
+                    <li>
+                        <a 
+                            href="#contact" 
+                            onClick={(e) => scrollToSection(e, 'contact')}
+                        >
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </nav>
     );
 }
