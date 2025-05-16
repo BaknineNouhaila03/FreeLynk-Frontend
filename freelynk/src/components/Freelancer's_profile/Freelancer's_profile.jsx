@@ -1,7 +1,11 @@
 "use client"
 import Footer from "../Footer/Footer";
+<<<<<<< HEAD
+=======
 import NavBar from "../navbar2/Navbar";
+>>>>>>> cbb467d726a2cc5e13f7815b1010137d468261a8
 import { useState, useEffect } from "react";
+import NavBar from "../navbar2/Navbar";
 
 export default function FreelancerProfile() {
     const [isMobile, setIsMobile] = useState(false);
