@@ -77,12 +77,13 @@ export default function NavBar() {
 
             <ul className={`${styles.iconNav} ${mobileMenuOpen ? styles.mobileActive : ''}`} ref={mobileMenuRef}>
                 <li>
-                    <Link href="/" onClick={() => setMobileMenuOpen(false)}>
-                        <div className={styles.navItem}>
-                            <AiOutlineHome size={24} />
-                            <span className={styles.navLabel}>Home</span>
-                        </div>
-                    </Link>
+<Link href="/home_client">
+  <div className={styles.navItem} onClick={() => setMobileMenuOpen(false)}>
+    <AiOutlineHome size={24} />
+    <span className={styles.navLabel}>Home</span>
+  </div>
+</Link>
+
                 </li>
 
                 <li style={{ position: 'relative' }} ref={notifRef}>
@@ -109,14 +110,7 @@ export default function NavBar() {
                     )}
                 </li>
 
-                <li>
-                    <Link href="/messages" onClick={() => setMobileMenuOpen(false)}>
-                        <div className={styles.navItem}>
-                            <BsChatDots size={22} />
-                            <span className={styles.navLabel}>Messages</span>
-                        </div>
-                    </Link>
-                </li>
+
                 
                 <li>
                     <Link href="/saved" onClick={() => setMobileMenuOpen(false)}>
@@ -145,15 +139,7 @@ export default function NavBar() {
                                 </Link>
                                 <User size={20} />
                             </div>
-                            <div className={styles.profileItem}>
-                                <Link href="/settings" onClick={() => {
-                                    setShowProfileDropdown(false);
-                                    setMobileMenuOpen(false);
-                                }}>
-                                    Settings
-                                </Link>
-                                <Settings size={20} />
-                            </div>
+    
                             <div className={styles.profileItem}>
                                 <button onClick={() => {
                                     alert("Logout");

@@ -29,27 +29,18 @@ export default function ClientCard() {
           </div>
 
           {/* Client Info Section */}
-          <div style={{ textAlign: "left", flex: 1 }}>
-            <h2 style={{ margin: "5px 0", color: "#4b4f54", fontSize: "22px" }}>Client Name</h2>
-            <div style={{ fontWeight: "bold", color: "#4b4f54", marginBottom: "12px" }}>
+          <div style={{ textAlign: "left", flex: 1 , marginTop:"20px"}}>
+            <h2 style={{ margin: "5px 0", color: "#666769", fontSize: "22px" }}>Client Name</h2>
+            <div style={{ fontWeight: "bold", color: "#666769"
+                           }}>
               (3.0) <span style={{ color: "#f0c420" }}>★★★☆☆</span>
             </div>
-            <button style={{
-              backgroundColor: "rgb(47, 60, 126, 0.83)",
-              color: "white",
-              padding: "8px 16px",
-              borderRadius: "8px",
-              border: "none",
-              fontWeight: "bold",
-              cursor: "pointer"
-            }}>
-              Get Verified
-            </button>
+
           </div>
         </div>
 
         {/* Details Section */}
-        <div style={{ textAlign: "left", borderTop: "1px solid #e5e7eb", paddingTop: "15px",marginTop:"60px" }}>
+        <div style={{ textAlign: "left",  paddingTop: "15px",marginTop:"40px",marginLeft:"40px" }}>
           <DetailItem label="Location" value="Rabat, Morocco" />
           <DetailItem label="Email" value="client@mail.com" />
           <DetailItem label="Languages" value="English" />
@@ -66,7 +57,6 @@ function DetailItem({ label, value }) {
         <span style={{ color: "#ef9b5e", fontWeight: "bold" }}>{label} : </span>
         <span style={{ color: "#333" }}>{value}</span>
       </div>
-      <span style={{ color: "#2c3574", cursor: "pointer", marginLeft: "10px" }}>✎</span>
     </div>
   );
 }

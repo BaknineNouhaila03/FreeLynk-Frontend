@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import NavBar from "../navbar2/Navbar";
-import Footer from "../Footer/Footer";
+import NavBar from "../../components/navbar2/Navbar";
+import Footer from "../../components/Footer/Footer";
 import { FiPlus, FiFolder, FiGlobe } from "react-icons/fi";
 
 export default function Home_client() {
@@ -79,11 +79,10 @@ const HeaderSection = () => (
 const ActionButtons = () => {
     const buttons = [
         { icon: <FiPlus />, label: "Add a new project" },
-        { icon: <FiFolder />, label: "My Projects" },
-        { icon: <FiGlobe />, label: "Browse Projects" }
+        { icon: <FiGlobe />, label: "My Projects" }
     ];
     return (
-        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "60px", marginTop: "-25px", height: "40px" }}>
+        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "100px", marginTop: "-25px", height: "40px" }}>
             {buttons.map((btn, index) => (
                 <button
                     key={index}
