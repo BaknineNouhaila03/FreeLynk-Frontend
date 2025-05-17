@@ -1,9 +1,9 @@
 "use client"
 import { useState, useEffect } from 'react';
 import styles from './ProfilePage.module.css';
-import PersonalInfo from './steps/PersInfo/PersonalInfo';
-import ProfessionalInfo from './steps/ProfInfo/page';
-import AccountSecurity from './steps/AccSec/page';
+import PersonalInfo from '../steps/PersInfo/page';
+import ProfessionalInfo from '../steps/ProfInfo/page';
+import AccountSecurity from '../steps/AccSec/page';
 
 export default function ProfilePage() {
   const [activeStep, setActiveStep] = useState(1);
@@ -50,7 +50,7 @@ export default function ProfilePage() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <img src='images/image.png' className={styles.logo} alt="Logo" />
+        <img src='/images/image.png' className={styles.logo} alt="Logo" />
       </header>
       
       <main className={styles.main}>

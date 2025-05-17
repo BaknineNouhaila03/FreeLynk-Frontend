@@ -58,7 +58,14 @@ export default function NavBar() {
                 </Link>
             </div>
 
-            
+            <div className={styles.searchContainer}>
+                <FiSearch className={styles.searchIcon} />
+                <input
+                    type="text"
+                    placeholder="What service are you looking for today ?"
+                    className={styles.searchInput}
+                />
+            </div>
 
             <button 
                 className={styles.hamburger} 
@@ -92,6 +99,10 @@ export default function NavBar() {
                         <div className={styles.dropdownMenu}>
                             <div className={styles.dropdownContent}>
                                 <p style={{ color: "grey" }}>Notifications</p>
+                            </div>
+                            <div className={styles.dropdownFooter}>
+                                <IoMdVolumeMute style={{ marginRight: '8px' }} />
+                                <span style={{ color: "grey" }}>Mute notifications</span>
                             </div>
                         </div>
                     )}
