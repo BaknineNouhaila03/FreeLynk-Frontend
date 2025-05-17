@@ -196,3 +196,84 @@
       font-size: 24px;
     }
   }
+  
+@media (max-width: 768px) {
+  .signUpModal {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .signUpButton,
+  .googleButton {
+    width: 100%;
+    margin: 10px 0;
+    margin-left: 0; /* Remove fixed margins */
+  }
+
+  .googleButton {
+    justify-content: center;
+  }
+
+  .formInput {
+    font-size: 14px;
+  }
+
+  .checkboxLabel {
+    font-size: 13px;
+  }
+
+  .modalHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .dividerText {
+    font-size: 12px;
+  }
+
+  .formLabel {
+    font-size: 13px;
+  }
+
+  .accountText {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalOverlay {
+    padding: 10px;
+  }
+
+  .signUpModal {
+    width: 100%;
+    height: auto;
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .formInput {
+    padding: 10px;
+  }
+
+  .signUpButton,
+  .googleButton {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .googleButton img {
+    height: 16px;
+    width: 16px;
+  }
+}

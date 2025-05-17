@@ -6,17 +6,19 @@ import styles from './Home.module.css';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import LoginForm from '../../components/LoginForm/LoginForm';
+import SignUpForm from '../../components/SignUpForm/SignUpForm'; // Make sure this path is correct
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showFreelancerLoginModal, setShowFreelancerLoginModal] = useState(false);
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const [userType, setUserType] = useState(''); // 'client' or 'freelancer'
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -26,34 +28,43 @@ export default function Home() {
     setShowLoginModal(true);
   };
 
-  const handleFreelancerButtonClick = () => {
-    setShowFreelancerLoginModal(true);
+  const handleSignUpClientButtonClick = () => {
+    setUserType('client');
+    setShowSignUpModal(true);
+  };
+
+  const handleSignUpFreelancerButtonClick = () => {
+    setUserType('freelancer');
+    setShowSignUpModal(true);
   };
 
   const handleCloseModal = () => {
     setShowLoginModal(false);
   };
 
-  const handleCloseFreelancerModal = () => {
-    setShowFreelancerLoginModal(false);
+  const handleCloseSignUpModal = () => {
+    setShowSignUpModal(false);
   };
 
   return (
     <div className={styles.container}>
-      {/* Client Login Modal */}
+      {/* Login Modal */}
       {showLoginModal && (
         <div className={styles.modalOverlay}>
           <LoginForm onClose={handleCloseModal} />
         </div>
       )}
-      
-      {/* Freelancer Login Modal */}
-      {showFreelancerLoginModal && (
+
+      {/* Sign Up Modal */}
+      {showSignUpModal && (
         <div className={styles.modalOverlay}>
-          <LoginForm onClose={handleCloseFreelancerModal} />
+          <SignUpForm
+            onClose={handleCloseSignUpModal}
+            userType={userType}
+          />
         </div>
       )}
-      
+
       <section id="home" className={styles.pageBackground}>
         <NavBar />
         <div className={styles.heroSection}>
@@ -64,22 +75,27 @@ export default function Home() {
             instantly online.
           </h1>
           <div className={styles.buttons}>
-            <button 
-              className={styles.clientButton} 
+            <button
+              className={styles.clientButton}
               onClick={handleClientButtonClick}
             >
-              I am a client
+              Sign In
             </button>
-            <button 
-              className={styles.freelancerButton} 
-              onClick={handleFreelancerButtonClick}
+            <button
+              className={styles.freelancerButton}
+              onClick={handleSignUpClientButtonClick}
             >
-              I am a freelancer
+              Sign Up (client)
             </button>
+            <Link href="/auth/signup-freelancer/steps/" passHref>
+              <button className={styles.freelancerButton}>
+                Sign Up (freelancer)
+              </button>
+            </Link>
           </div>
         </div>
       </section>
-      
+
       <section id="about" className={styles.about}>
         <div className={styles.aboutContent}>
           <h2>Welcome to FreeLynk — Your Go-To Platform for Top Freelance Talent</h2>
@@ -87,7 +103,7 @@ export default function Home() {
           </p>
         </div>
       </section>
-      
+
       <section id="categories" className={styles.categories}>
         <div className={styles.categoriesContent}>
           <h1>Accomplish tasks across more than <span className={styles.orangeText}>32</span> different categories</h1>
@@ -103,7 +119,7 @@ export default function Home() {
             <li>Logo Design</li>
             <li>Public Relations</li>
           </ul>
-         
+
           <ul>
             <li>Research Writing</li>
             <li>Article Writing</li>
@@ -114,7 +130,7 @@ export default function Home() {
             <li>Javascript</li>
             <li>Data Processing</li>
           </ul>
-         
+
           <ul>
             <li>Legal</li>
             <li>Linux</li>
@@ -127,7 +143,7 @@ export default function Home() {
           </ul>
         </div>
       </section>
-     
+
       <section id="contact" className={styles.contact}>
         <div className={styles.contactContentGrid}>
           <div className={styles.contactColumn}>
@@ -136,7 +152,7 @@ export default function Home() {
               <span>US (International) / English</span>
             </div>
           </div>
-         
+
           <div className={styles.contactColumn}>
             <h3>FreeLancer</h3>
             <ul>
@@ -145,7 +161,7 @@ export default function Home() {
               <li>Freelancers</li>
             </ul>
           </div>
-         
+
           <div className={styles.contactColumn}>
             <h3>About</h3>
             <ul>
@@ -153,7 +169,7 @@ export default function Home() {
               <li>How it works</li>
             </ul>
           </div>
-         
+
           <div className={styles.contactColumn}>
             <h3>Terms</h3>
             <ul>
@@ -163,8 +179,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-     <div style={{backgroundColor:"black"}}>
-      <Footer />
+      <div style={{ backgroundColor: "black" }}>
+        <Footer />
       </div>
     </div>
   );

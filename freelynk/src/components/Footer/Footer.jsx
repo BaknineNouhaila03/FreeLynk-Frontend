@@ -16,7 +16,7 @@ const Footer = () => {
         <div className={styles.divider}></div>
         
         <div className={styles.footerLinks}>
-          <Link href="/terms-and-conditions" className={styles.termsLink}>
+          <Link href="/TC" className={styles.termsLink}>
             Terms and Conditions
           </Link>
         </div>
