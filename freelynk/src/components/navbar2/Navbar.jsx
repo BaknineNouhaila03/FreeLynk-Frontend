@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import styles from '../NavBar.module.css';
+import styles from './NavBar.module.css';
 import { LogOut, Settings, User, Menu, X } from "lucide-react";
 import { FiSearch } from "react-icons/fi";
 import { IoMdVolumeMute, IoMdNotificationsOutline } from "react-icons/io";

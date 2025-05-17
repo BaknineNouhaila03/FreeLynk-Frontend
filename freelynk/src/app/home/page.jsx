@@ -95,7 +95,7 @@ export default function Home() {
         <div className={styles.contactContentGrid}>
           <div className={styles.contactColumn}>
             <div className={styles.language}>
-              <img src="images/image.png" alt="Language flag" />
+              <img src="images/globe.png"alt="Language flag" />
               <span>US (International) / English</span>
             </div>
           </div>
@@ -121,7 +121,9 @@ export default function Home() {
             <h3>Terms</h3>
             <ul>
               <li>Privacy</li>
-              <li>Terms and Conditions</li>
+              <Link href="/TC">
+                <li>Terms and Conditions</li>
+              </Link> 
             </ul>
           </div>
         </div>
