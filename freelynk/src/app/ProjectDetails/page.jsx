@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import styles from './ProjectDetails.module.css';
 import Image from 'next/image';
-import { BookmarkIcon, MapPinIcon, ProfilIcon } from 'lucide-react';
+import { BookmarkIcon, User, Mail } from 'lucide-react';
 import NavBar from '../../components/navbar2/Navbar';
 import Footer from '../../components/Footer/Footer';
 
@@ -133,11 +133,11 @@ export default function ProjectDetails() {
             <div className={styles.clientInfo}>
               <h2 className={styles.clientTitle}>About the client</h2>
               <div className={styles.clientLocation}>
-                <ProfilIcon className={styles.infoIcon} size={16} />
+                <User className={styles.infoIcon} size={16} />
                 <span>{projectData.clientInfo.name}</span>
               </div>
               <div className={styles.clientCountry}>
-                <span className={styles.flagIcon}>🇭🇺</span>
+                <Mail className={styles.flagIcon} size={16} />
                 <span>{projectData.clientInfo.email}</span>
               </div>
               

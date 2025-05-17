@@ -215,6 +215,7 @@
   }
   
   .hamburger {
+    color: black;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -225,7 +226,8 @@
     top: 80px;
     right: -100%;
     flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.9);
+    align-items: flex-start;
+    background-color: white;
     backdrop-filter: blur(10px);
     width: 200px;
     height: auto;
@@ -242,6 +244,7 @@
   }
   
   .navItem {
+    color: #333;
     width: 100%;
     padding: 8px 0;
   }
@@ -249,7 +252,7 @@
   .navLabel {
     display: block;
     margin-left: 12px;
-    color: white;
+    color: black;
   }
   
   .dropdownMenuProfile {

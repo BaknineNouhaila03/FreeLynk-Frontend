@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import styles from './ProjectDetailsFreelancer.module.css';
 import Image from 'next/image';
-import { BookmarkIcon, MapPinIcon, CalendarIcon, X } from 'lucide-react';
+import { BookmarkIcon, User, Mail,X } from 'lucide-react';
 import NavBar from '../../components/navbar2/Navbar';
 import Footer from '../../components/Footer/Footer';
 
@@ -31,11 +31,8 @@ export default function ProjectDetailsFreelancer() {
     skillsRequired: ['Website Design', 'Lead Generation'],
     projectId: '39324550',
     clientInfo: {
-      location: 'Budapest',
-      country: 'Hungary',
-      memberSince: 'Mar 29, 2025',
-      rating: 0.0,
-      reviews: 0
+      name: 'Jhon Smith',
+      email: 'Jhon@gmail.com',
     },
     proposals: [
       {
@@ -167,28 +164,17 @@ export default function ProjectDetailsFreelancer() {
               </div>
               
               <div className={styles.clientInfo}>
-                <h2 className={styles.clientTitle}>About the client</h2>
-                <div className={styles.clientLocation}>
-                  <MapPinIcon className={styles.infoIcon} size={16} />
-                  <span>{projectData.clientInfo.location}</span>
-                </div>
-                <div className={styles.clientCountry}>
-                  <span className={styles.flagIcon}>🇭🇺</span>
-                  <span>{projectData.clientInfo.country}</span>
-                </div>
-                <div className={styles.starRating}>
-                  <div className={styles.stars}>
-                    {'★'.repeat(Math.floor(projectData.clientInfo.rating))}
-                    {'☆'.repeat(5 - Math.floor(projectData.clientInfo.rating))}
-                  </div>
-                  <span>{projectData.clientInfo.rating.toFixed(1)}</span>
-                  <span className={styles.reviewCount}>({projectData.clientInfo.reviews})</span>
-                </div>
-                <div className={styles.clientMemberSince}>
-                  <CalendarIcon className={styles.infoIcon} size={16} />
-                  <span>Member since {projectData.clientInfo.memberSince}</span>
-                </div>
+              <h2 className={styles.clientTitle}>About the client</h2>
+              <div className={styles.clientLocation}>
+                <User className={styles.infoIcon} size={16} />
+                <span>{projectData.clientInfo.name}</span>
               </div>
+              <div className={styles.clientCountry}>
+                <Mail className={styles.flagIcon} size={16} />
+                <span>{projectData.clientInfo.email}</span>
+              </div>
+              
+            </div>
             </div>
           ) : (
             <div className={styles.proposalsContainer}>
