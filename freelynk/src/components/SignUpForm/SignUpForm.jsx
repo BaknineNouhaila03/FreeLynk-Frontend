@@ -132,12 +132,7 @@ export default function SignUpForm({ onClose, userType }) {
           </div>
           
           <button type="button" className={styles.googleButton}>
-            <Image 
-              src="/assets/google-icon.png" 
-              alt="Google icon"
-              width={18}
-              height={18}
-            />
+          <img src="assets/image.png" style={{ height: "18px", width: "18px" }} />
             Continue with Google
           </button>
           

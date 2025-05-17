@@ -14,12 +14,9 @@ export default function ProfilePage() {
     step3: false
   });
   
-  // Use ref to track previous validation state
   const prevValidationRef = useRef(stepsValidation);
 
-  // Update completion rate when steps validation changes
   useEffect(() => {
-    // Only update if validation actually changed
     if (JSON.stringify(prevValidationRef.current) !== JSON.stringify(stepsValidation)) {
       calculateCompletionRate();
       prevValidationRef.current = stepsValidation;
@@ -44,7 +41,7 @@ export default function ProfilePage() {
   };
 
   const handleStepValidation = (step, isValid) => {
-    // Only update if the validation status actually changed
+
     if (stepsValidation[`step${step}`] !== isValid) {
       setStepsValidation(prev => ({
         ...prev,
