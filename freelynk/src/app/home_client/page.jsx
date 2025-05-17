@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import NavBar from "../../components/navbar2/Navbar";
 import Footer from "../../components/Footer/Footer";
 import { FiPlus, FiFolder, FiGlobe } from "react-icons/fi";
@@ -80,20 +80,36 @@ const HeaderSection = () => (
 
 const ActionButtons = () => {
     const router = useRouter();
+    const [windowWidth, setWindowWidth] = useState(0);
+
+    // Initialize window width on client side
+    useEffect(() => {
+        setWindowWidth(window.innerWidth);
+        
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+        
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const buttons = [
         { icon: <FiPlus />, label: "Add a new project", path: "/AddProject" },
         { icon: <FiGlobe />, label: "My Projects", path: "/MyProjects" }
     ];
 
+    // Determine layout based on window width
+    const isSmallScreen = windowWidth < 640;
+
     return (
         <div style={{
             display: "flex",
-            justifyContent: "center",
-            flexWrap: "wrap",
-            gap: "100px",
-            marginTop: "-25px",
-            height: "40px"
+            flexDirection: isSmallScreen ? "column" : "row",
+            gap: "16px",
+            marginTop: "20px",
+            padding: "0 16px",
+            width: "100%"
         }}>
             {buttons.map((btn, index) => (
                 <button
@@ -106,20 +122,22 @@ const ActionButtons = () => {
                         gap: "8px",
                         backgroundColor: "#f2a469",
                         color: "white",
-                        border: "none",
                         borderRadius: "12px",
-                        padding: "12px 20px",
+                        padding: "12px 16px",
                         fontSize: "14px",
                         fontWeight: "bold",
-                        boxShadow: "4px 4px 0px rgba(242, 164, 105, 0.35)",
+                        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                        border: "none",
                         cursor: "pointer",
-                        width: "250px",
-                        height: "50px",
-                        marginTop: "-20px"
+                        transition: "background-color 0.3s",
+                        width: isSmallScreen ? "100%" : "auto",
+                        flex: isSmallScreen ? "none" : "1"
                     }}
+                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#e89355"}
+                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#f2a469"}
                 >
-                    {btn.icon}
-                    {btn.label}
+                    <span style={{ display: "flex", alignItems: "center" }}>{btn.icon}</span>
+                    <span>{btn.label}</span>
                 </button>
             ))}
         </div>

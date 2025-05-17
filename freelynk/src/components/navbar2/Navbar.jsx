@@ -93,10 +93,6 @@ export default function NavBar() {
                             <div className={styles.dropdownContent}>
                                 <p style={{ color: "grey" }}>Notifications</p>
                             </div>
-                            <div className={styles.dropdownFooter}>
-                                <IoMdVolumeMute style={{ marginRight: '8px' }} />
-                                <span style={{ color: "grey" }}>Mute notifications</span>
-                            </div>
                         </div>
                     )}
                 </li>

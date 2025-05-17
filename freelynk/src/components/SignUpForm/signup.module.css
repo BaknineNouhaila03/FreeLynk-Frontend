@@ -22,25 +22,22 @@
   background-color: white;
   border-radius: 10px;
   width: 100%;
-  max-width: 600px; /* Wider modal */
-  padding: 30px 40px; /* Increased padding */
-  max-height: 90vh; /* Maximum height but will auto-size */
-  height: auto; /* Auto height based on content */
-  overflow-y: visible; /* Remove scrollbar */
+  max-width: 600px; /* Increased width from 500px */
+  padding: 20px 30px; /* Horizontal padding increased */
+  max-height: 75vh; /* Reduced height from 85vh */
+  overflow-y: auto;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
 }
 
 .modalHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .title {
-  font-size: 24px;
+  font-size: 24px; /* Slightly larger than previous 22px */
   font-weight: bold;
   margin: 0;
   color: #333;
@@ -58,7 +55,7 @@
 .accountText {
   font-size: 14px;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .signInLink {
@@ -70,33 +67,32 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  flex: 1; /* Take available space */
+  gap: 12px;
 }
 
 .formRow {
   display: flex;
-  gap: 15px;
+  gap: 15px; /* Slightly wider gap for the wider modal */
 }
 
 .formGroup {
   flex: 1;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
 .formLabel {
   display: block;
   font-weight: bold;
-  margin-bottom: 8px;
-  font-size: 14px;
+  margin-bottom: 6px;
+  font-size: 14px; /* Slightly larger than previous 13px */
   color: #333;
 }
 
 .formInput {
   width: 100%;
-  padding: 12px 15px; /* Comfortable padding */
+  padding: 10px 12px; /* Slightly wider horizontal padding */
   border: 1px solid #ddd;
-  border-radius: 6px;
+  border-radius: 5px;
   font-size: 14px;
 }
 
@@ -108,7 +104,7 @@
 .checkboxGroup {
   display: flex;
   align-items: center;
-  margin: 10px 0;
+  margin: 8px 0;
 }
 
 .checkbox {
@@ -122,21 +118,21 @@
 
 .signUpButton {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   background-color: #2d3a8c;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .divider {
   display: flex;
   align-items: center;
-  margin: 15px 0;
+  margin: 12px 0;
 }
 
 .dividerLine {
@@ -146,22 +142,22 @@
 }
 
 .dividerText {
-  padding: 0 12px;
+  padding: 0 10px;
   color: #666;
   font-size: 14px;
 }
 
 .googleButton {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   background-color: white;
   border: 1px solid #ddd;
-  border-radius: 6px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   cursor: pointer;
 }
@@ -170,7 +166,7 @@
   font-size: 12px;
   color: #666;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .termsLink {
@@ -181,8 +177,9 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .signUpModal {
-    padding: 25px 30px;
+    padding: 20px;
     max-width: 90%;
+    max-height: 80vh; /* Slightly taller on mobile */
   }
   
   .title {
@@ -191,26 +188,35 @@
   
   .formRow {
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
   }
 }
 
 @media (max-width: 480px) {
+  .modalOverlay {
+    padding: 10px;
+  }
+  
   .signUpModal {
-    padding: 20px;
-    max-width: 95%;
+    padding: 15px;
+    max-height: 85vh; /* Full height on very small screens */
   }
   
   .title {
     font-size: 20px;
   }
   
-  .formInput {
-    padding: 10px 12px;
+  .formInput, 
+  .signUpButton, 
+  .googleButton {
+    padding: 8px 10px;
+    font-size: 14px;
   }
   
-  .signUpButton,
-  .googleButton {
-    padding: 10px;
+  .accountText,
+  .formLabel,
+  .checkboxLabel,
+  .dividerText {
+    font-size: 13px;
   }
 }

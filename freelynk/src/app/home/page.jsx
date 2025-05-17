@@ -1,25 +1,24 @@
 "use client"
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer/Footer';
-import LoginForm from '../../components/LoginForm/LoginForm';
 import styles from './Home.module.css';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import LoginForm from '../../components/LoginForm/LoginForm';
+import SignUpForm from '../../components/SignUpForm/SignUpForm'; // Make sure this path is correct
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
-  const [isTablet, setIsTablet] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showFreelancerLoginModal, setShowFreelancerLoginModal] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const [userType, setUserType] = useState(''); // 'client' or 'freelancer'
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
-      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
     };
-    
+
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -29,51 +28,43 @@ export default function Home() {
     setShowLoginModal(true);
   };
 
-  const handleFreelancerButtonClick = () => {
-    setShowFreelancerLoginModal(true);
+  const handleSignUpClientButtonClick = () => {
+    setUserType('client');
+    setShowSignUpModal(true);
+  };
+
+  const handleSignUpFreelancerButtonClick = () => {
+    setUserType('freelancer');
+    setShowSignUpModal(true);
   };
 
   const handleCloseModal = () => {
     setShowLoginModal(false);
   };
 
-  const handleCloseFreelancerModal = () => {
-    setShowFreelancerLoginModal(false);
+  const handleCloseSignUpModal = () => {
+    setShowSignUpModal(false);
   };
-
-  // Handle scroll locking when modal is open
-  useEffect(() => {
-    if (showLoginModal || showFreelancerLoginModal) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [showLoginModal, showFreelancerLoginModal]);
 
   return (
     <div className={styles.container}>
-      {/* Client Login Modal */}
+      {/* Login Modal */}
       {showLoginModal && (
-        <div className={styles.modalOverlay} onClick={handleCloseModal}>
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <LoginForm onClose={handleCloseModal} userType="client" />
-          </div>
+        <div className={styles.modalOverlay}>
+          <LoginForm onClose={handleCloseModal} />
         </div>
       )}
-      
-      {/* Freelancer Login Modal */}
-      {showFreelancerLoginModal && (
-        <div className={styles.modalOverlay} onClick={handleCloseFreelancerModal}>
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <LoginForm onClose={handleCloseFreelancerModal} userType="freelancer" />
-          </div>
+
+      {/* Sign Up Modal */}
+      {showSignUpModal && (
+        <div className={styles.modalOverlay}>
+          <SignUpForm
+            onClose={handleCloseSignUpModal}
+            userType={userType}
+          />
         </div>
       )}
-      
+
       <section id="home" className={styles.pageBackground}>
         <NavBar />
         <div className={styles.heroSection}>
@@ -84,24 +75,27 @@ export default function Home() {
             instantly online.
           </h1>
           <div className={styles.buttons}>
-            <button 
-              className={styles.clientButton} 
+            <button
+              className={styles.clientButton}
               onClick={handleClientButtonClick}
-              aria-label="I am a client"
             >
-              I am a client
+              Sign In
             </button>
-            <button 
-              className={styles.freelancerButton} 
-              onClick={handleFreelancerButtonClick}
-              aria-label="I am a freelancer"
+            <button
+              className={styles.freelancerButton}
+              onClick={handleSignUpClientButtonClick}
             >
-              I am a freelancer
+              Sign Up (client)
             </button>
+            <Link href="/signup-freelancer/ProfilePage" passHref>
+              <button className={styles.freelancerButton}>
+                Sign Up (freelancer)
+              </button>
+            </Link>
           </div>
         </div>
       </section>
-      
+
       <section id="about" className={styles.about}>
         <div className={styles.aboutContent}>
           <h2>Welcome to FreeLynk — Your Go-To Platform for Top Freelance Talent</h2>
@@ -109,94 +103,83 @@ export default function Home() {
           </p>
         </div>
       </section>
-      
+
       <section id="categories" className={styles.categories}>
         <div className={styles.categoriesContent}>
-          <h2>Accomplish tasks across more than <span className={styles.orangeText}>32</span> different categories</h2>
+          <h1>Accomplish tasks across more than <span className={styles.orangeText}>32</span> different categories</h1>
         </div>
         <div className={styles.categoriesGrid}>
-          <div className={styles.categoryColumn}>
-            <ul>
-              <li>Website Design</li>
-              <li>Mobile Apps</li>
-              <li>Android Apps</li>
-              <li>iPhone Apps</li>
-              <li>Software Architecture</li>
-              <li>Graphic Design</li>
-              <li>Logo Design</li>
-              <li>Public Relations</li>
-            </ul>
-          </div>
-         
-          <div className={styles.categoryColumn}>
-            <ul>
-              <li>Research Writing</li>
-              <li>Article Writing</li>
-              <li>Web Scraping</li>
-              <li>HTML</li>
-              <li>CSS</li>
-              <li>HTML 5</li>
-              <li>Javascript</li>
-              <li>Data Processing</li>
-            </ul>
-          </div>
-         
-          <div className={styles.categoryColumn}>
-            <ul>
-              <li>Legal</li>
-              <li>Linux</li>
-              <li>Manufacturing</li>
-              <li>Data Entry</li>
-              <li>Content Writing</li>
-              <li>Marketing</li>
-              <li>Excel</li>
-              <li>Ghostwriting</li>
-            </ul>
-          </div>
+          <ul>
+            <li>Website Design</li>
+            <li>Mobile Apps</li>
+            <li>Android Apps</li>
+            <li>iPhone Apps</li>
+            <li>Software Architecture</li>
+            <li>Graphic Design</li>
+            <li>Logo Design</li>
+            <li>Public Relations</li>
+          </ul>
+
+          <ul>
+            <li>Research Writing</li>
+            <li>Article Writing</li>
+            <li>Web Scraping</li>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>HTML 5</li>
+            <li>Javascript</li>
+            <li>Data Processing</li>
+          </ul>
+
+          <ul>
+            <li>Legal</li>
+            <li>Linux</li>
+            <li>Manufacturing</li>
+            <li>Data Entry</li>
+            <li>Content Writing</li>
+            <li>Marketing</li>
+            <li>Excel</li>
+            <li>Ghostwriting</li>
+          </ul>
         </div>
       </section>
-     
+
       <section id="contact" className={styles.contact}>
         <div className={styles.contactContentGrid}>
           <div className={styles.contactColumn}>
             <div className={styles.language}>
-              <img src="/images/globe.png" alt="Language icon" />
+              <img src="images/globe.png" alt="Language flag" />
               <span>US (International) / English</span>
             </div>
           </div>
-         
+
           <div className={styles.contactColumn}>
             <h3>FreeLancer</h3>
             <ul>
-              <li><a href="#categories">Categories</a></li>
-              <li><a href="#projects">Projects</a></li>
-              <li><a href="#freelancers">Freelancers</a></li>
+              <li>Categories</li>
+              <li>Projects</li>
+              <li>Freelancers</li>
             </ul>
           </div>
-         
+
           <div className={styles.contactColumn}>
             <h3>About</h3>
             <ul>
-              <li><a href="#about">About us</a></li>
-              <li><a href="#how-it-works">How it works</a></li>
+              <li>About us</li>
+              <li>How it works</li>
             </ul>
           </div>
-         
+
           <div className={styles.contactColumn}>
             <h3>Terms</h3>
             <ul>
-              <li><a href="/privacy">Privacy</a></li>
-              <li>
-                <Link href="/TC">
-                  Terms and Conditions
-                </Link>
-              </li>
+              <li>Privacy</li>
+              <li>Terms and Conditions</li>
             </ul>
           </div>
         </div>
       </section>
-      
-      <div className={styles.footerContainer}>
+      <div style={{ backgroundColor: "black" }}>
         <Footer />
       </div>
     </div>
