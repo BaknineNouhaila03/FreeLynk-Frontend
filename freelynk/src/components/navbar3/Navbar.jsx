@@ -58,7 +58,14 @@ export default function NavBar() {
                 </Link>
             </div>
 
-            
+            <div className={styles.searchContainer}>
+                <FiSearch className={styles.searchIcon} />
+                <input
+                    type="text"
+                    placeholder="What service are you looking for today ?"
+                    className={styles.searchInput}
+                />
+            </div>
 
             <button 
                 className={styles.hamburger} 

@@ -31,10 +31,7 @@ export default function ClientCard() {
           {/* Client Info Section */}
           <div style={{ textAlign: "left", flex: 1 , marginTop:"20px"}}>
             <h2 style={{ margin: "5px 0", color: "#666769", fontSize: "22px" }}>Client Name</h2>
-            <div style={{ fontWeight: "bold", color: "#666769"
-                           }}>
-              (3.0) <span style={{ color: "#f0c420" }}>★★★☆☆</span>
-            </div>
+            
 
           </div>
         </div>

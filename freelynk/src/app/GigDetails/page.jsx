@@ -6,22 +6,20 @@ import styles from './GigDetails.module.css';
 import NavBar from '../../components/navbar2/Navbar';
 
 export default function GigDetails() {
-  // State for the slider
+
   const [currentSlide, setCurrentSlide] = useState(0);
-  
-  // Portfolio items for the slider
   const portfolioItems = [
     {
       id: 1,
-      image: "/assets/Client.jpg", // Replace with your actual image path
+      image: "/assets/Client.jpg", 
     },
     {
       id: 2,
-      image: "/assets/Client.jpg", // Replace with your actual image path
+      image: "/assets/Client.jpg", 
     },
     {
       id: 3,
-      image: "/assets/Client.jpg", // Replace with your actual image path
+      image: "/assets/Client.jpg", 
     },
   ];
 
@@ -32,7 +30,6 @@ export default function GigDetails() {
     );
   };
 
-  // Navigate to next slide
   const nextSlide = () => {
     setCurrentSlide((prev) => 
       prev === portfolioItems.length - 1 ? 0 : prev + 1
@@ -53,7 +50,6 @@ export default function GigDetails() {
         <div style={{backgroundColor:"white",color:"#2f3c7e",fontSize:"35px",padding:"30px"}}><p style={{marginLeft:"30px",fontWeight:"700"}}>I will build a freelancing wordpress website with workreap theme</p>
         </div>
 
-        {/* Profile Header Section */}
         <div className={styles.profileHeader}>
           <div className={styles.profileInfo}>
             <div className={styles.avatarContainer}>
@@ -83,7 +79,6 @@ export default function GigDetails() {
           </button>
         </div>
 
-        {/* Portfolio Slider Section */}
         <div className={styles.portfolioSlider}>
           {portfolioItems.map((item, index) => (
             <div 
@@ -98,7 +93,6 @@ export default function GigDetails() {
               </div>
             </div>
           ))}
-          {/* Navigation Arrows */}
           <button 
             onClick={prevSlide}
             className={`${styles.navButton} ${styles.prevButton}`}
@@ -121,7 +115,6 @@ export default function GigDetails() {
 
 
 
-        {/* About This Gig Section */}
         <div className={styles.aboutSection}>
           <h2 className={styles.sectionTitle}>About this gig</h2>
           <div className={styles.projectDescription}>

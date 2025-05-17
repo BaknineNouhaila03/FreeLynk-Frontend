@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import './RatingFreelancer.module.css';
+import './RatingFreelancer.css';
 import NavBar from '../../components/navbar2/Navbar';
 import Footer from '../../components/Footer/Footer';
 

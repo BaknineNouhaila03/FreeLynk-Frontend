@@ -13,6 +13,7 @@ export default function Home_Freelancer() {
             <NavBar />
             <HeaderSection />
             <div className={styles.container2}>
+                <h2 style={{ padding: "6px 6px" }}>Recommanded freelancers</h2>
             <ProjectsFiltered/>
             </div>
 

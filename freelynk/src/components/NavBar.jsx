@@ -7,6 +7,8 @@ import styles from './NavBar.module.css';
 export default function NavBar() {
     // State to track if navbar should be transparent or solid
     const [scrolled, setScrolled] = useState(false);
+    // State to track if mobile menu is open
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     
     // Handle scroll event to change navbar style
     useEffect(() => {
@@ -32,7 +34,14 @@ export default function NavBar() {
         const section = document.getElementById(sectionId);
         if (section) {
             section.scrollIntoView({ behavior: 'smooth' });
+            // Close mobile menu after clicking a link
+            setIsMenuOpen(false);
         }
+    };
+
+    // Toggle mobile menu
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
     };
 
     return (
@@ -72,36 +81,44 @@ export default function NavBar() {
             
             {/* Mobile menu toggle button */}
             <div className={styles.menuToggle}>
-                <input type="checkbox" />
+                <input 
+                    type="checkbox" 
+                    checked={isMenuOpen}
+                    onChange={toggleMenu}
+                />
                 <span></span>
                 <span></span>
                 <span></span>
-                <ul className={styles.mobileMenu}>
-                    <li>
-                        <a 
-                            href="#about" 
-                            onClick={(e) => scrollToSection(e, 'about')}
-                        >
-                            About
-                        </a>
-                    </li>
-                    <li>
-                        <a 
-                            href="#categories" 
-                            onClick={(e) => scrollToSection(e, 'categories')}
-                        >
-                            Categories
-                        </a>
-                    </li>
-                    <li>
-                        <a 
-                            href="#contact" 
-                            onClick={(e) => scrollToSection(e, 'contact')}
-                        >
-                            Contact
-                        </a>
-                    </li>
-                </ul>
+                
+                {/* Mobile menu - only rendered when isMenuOpen is true */}
+                {isMenuOpen && (
+                    <ul className={styles.mobileMenu}>
+                        <li>
+                            <a 
+                                href="#about" 
+                                onClick={(e) => scrollToSection(e, 'about')}
+                            >
+                                About
+                            </a>
+                        </li>
+                        <li>
+                            <a 
+                                href="#categories" 
+                                onClick={(e) => scrollToSection(e, 'categories')}
+                            >
+                                Categories
+                            </a>
+                        </li>
+                        <li>
+                            <a 
+                                href="#contact" 
+                                onClick={(e) => scrollToSection(e, 'contact')}
+                            >
+                                Contact
+                            </a>
+                        </li>
+                    </ul>
+                )}
             </div>
         </nav>
     );

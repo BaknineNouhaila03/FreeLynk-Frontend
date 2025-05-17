@@ -6,6 +6,6 @@ import TC from './TC/page';
 
 
 export default function IndexPage() {
-  return <TC/>
+  return <Home/>
 
 }
