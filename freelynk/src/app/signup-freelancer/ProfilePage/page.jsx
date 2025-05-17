@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './ProfilePage.module.css';
 import PersonalInfo from '../steps/PersInfo/page';
 import ProfessionalInfo from '../steps/ProfInfo/page';
@@ -10,13 +10,20 @@ export default function ProfilePage() {
   const [completionRate, setCompletionRate] = useState(30);
   const [stepsValidation, setStepsValidation] = useState({
     step1: false,
-    step2: true, // Assume these are valid by default for this example
-    step3: false  // Changed to false since we now validate this step
+    step2: true,
+    step3: false
   });
+  
+  // Use ref to track previous validation state
+  const prevValidationRef = useRef(stepsValidation);
 
   // Update completion rate when steps validation changes
   useEffect(() => {
-    calculateCompletionRate();
+    // Only update if validation actually changed
+    if (JSON.stringify(prevValidationRef.current) !== JSON.stringify(stepsValidation)) {
+      calculateCompletionRate();
+      prevValidationRef.current = stepsValidation;
+    }
   }, [stepsValidation]);
 
   const calculateCompletionRate = () => {
@@ -37,10 +44,13 @@ export default function ProfilePage() {
   };
 
   const handleStepValidation = (step, isValid) => {
-    setStepsValidation(prev => ({
-      ...prev,
-      [`step${step}`]: isValid
-    }));
+    // Only update if the validation status actually changed
+    if (stepsValidation[`step${step}`] !== isValid) {
+      setStepsValidation(prev => ({
+        ...prev,
+        [`step${step}`]: isValid
+      }));
+    }
   };
 
   const isCurrentStepValid = () => {
@@ -76,9 +86,24 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {activeStep === 1 && <PersonalInfo onValidationChange={(isValid) => handleStepValidation(1, isValid)} />}
-        {activeStep === 2 && <ProfessionalInfo onValidationChange={(isValid) => handleStepValidation(2, isValid)} />}
-        {activeStep === 3 && <AccountSecurity onValidationChange={(isValid) => handleStepValidation(3, isValid)} />}
+{activeStep === 1 && (
+          <PersonalInfo 
+            onValidationChange={(isValid) => handleStepValidation(1, isValid)} 
+            key="step1"
+          />
+        )}
+        {activeStep === 2 && (
+          <ProfessionalInfo 
+            onValidationChange={(isValid) => handleStepValidation(2, isValid)} 
+            key="step2"
+          />
+        )}
+        {activeStep === 3 && (
+          <AccountSecurity 
+            onValidationChange={(isValid) => handleStepValidation(3, isValid)} 
+            key="step3"
+          />
+        )}
         
         <div className={styles.buttonContainer}>
           <button 

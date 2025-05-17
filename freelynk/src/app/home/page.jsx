@@ -87,7 +87,7 @@ export default function Home() {
             >
               Sign Up (client)
             </button>
-            <Link href="/auth/signup-freelancer/steps/" passHref>
+            <Link href="/signup-freelancer/ProfilePage" passHref>
               <button className={styles.freelancerButton}>
                 Sign Up (freelancer)
               </button>
