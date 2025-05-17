@@ -3,56 +3,30 @@
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer/Footer';
 import styles from './Home.module.css';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import LoginForm from '../../components/LoginForm/LoginForm';
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showFreelancerLoginModal, setShowFreelancerLoginModal] = useState(false);
 
+  // Check window size and set mobile state
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
     
+    // Set initial value
     handleResize();
+    
+    // Add event listener
     window.addEventListener('resize', handleResize);
+    
+    // Clean up
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleClientButtonClick = () => {
-    setShowLoginModal(true);
-  };
-
-  const handleFreelancerButtonClick = () => {
-    setShowFreelancerLoginModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowLoginModal(false);
-  };
-
-  const handleCloseFreelancerModal = () => {
-    setShowFreelancerLoginModal(false);
-  };
-
   return (
     <div className={styles.container}>
-      {/* Client Login Modal */}
-      {showLoginModal && (
-        <div className={styles.modalOverlay}>
-          <LoginForm onClose={handleCloseModal} />
-        </div>
-      )}
-      
-      {/* Freelancer Login Modal */}
-      {showFreelancerLoginModal && (
-        <div className={styles.modalOverlay}>
-          <LoginForm onClose={handleCloseFreelancerModal} />
-        </div>
-      )}
-      
       <section id="home" className={styles.pageBackground}>
         <NavBar />
         <div className={styles.heroSection}>
@@ -63,18 +37,8 @@ export default function Home() {
             instantly online.
           </h1>
           <div className={styles.buttons}>
-            <button 
-              className={styles.clientButton} 
-              onClick={handleClientButtonClick}
-            >
-              I am a client
-            </button>
-            <button 
-              className={styles.freelancerButton} 
-              onClick={handleFreelancerButtonClick}
-            >
-              I am a freelancer
-            </button>
+            <button className={styles.clientButton}>I am a client</button>
+            <button className={styles.freelancerButton}>I am a freelancer</button>
           </div>
         </div>
       </section>
@@ -131,7 +95,7 @@ export default function Home() {
         <div className={styles.contactContentGrid}>
           <div className={styles.contactColumn}>
             <div className={styles.language}>
-              <img src="images/globe.png" alt="Language flag" />
+              <img src="images/image.png" alt="Language flag" />
               <span>US (International) / English</span>
             </div>
           </div>
