@@ -2,18 +2,16 @@
 
 import { useState } from "react";
 import styles from "./signin.module.css";
-import Image from "next/image";
+import ResetPassword from "../ResetPassword/ResetPassword"; // Import the ResetPassword component
 
 export default function LoginForm({ onClose }) {
     const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
         email: "",
         password: "",
-        confirmPassword: ""
     });
 
     const [showPassword, setShowPassword] = useState(false);
+    const [showResetPassword, setShowResetPassword] = useState(false); // New state for reset password modal
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -32,6 +30,20 @@ export default function LoginForm({ onClose }) {
         setShowPassword(!showPassword);
     };
 
+    const handleForgotPassword = (e) => {
+        e.preventDefault();
+        setShowResetPassword(true);
+    };
+
+    const handleResetPasswordClose = () => {
+        setShowResetPassword(false);
+    };
+
+    // If showing reset password, return that component instead
+    if (showResetPassword) {
+        return <ResetPassword onClose={handleResetPasswordClose} />;
+    }
+
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.signUpModal}>
@@ -41,7 +53,7 @@ export default function LoginForm({ onClose }) {
                 </div>
 
                 <p className={styles.accountText}>
-                    Don't have an account: <a href="#" className={styles.signInLink}>Sign Up</a>
+                    Don't have an account? <a href="#" className={styles.signInLink}>Sign Up</a>
                 </p>
 
                 <form onSubmit={handleSubmit}>
@@ -61,7 +73,7 @@ export default function LoginForm({ onClose }) {
                             <label htmlFor="password" className={styles.formLabel} style={{ fontWeight: "bold" }}>
                                 Password
                             </label>
-                            <a href="#" style={{ fontSize: '12px', textDecoration: 'underline' }}>
+                            <a href="#" style={{ fontSize: '12px', textDecoration: 'underline' }} onClick={handleForgotPassword}>
                                 Forgot Password?
                             </a>
                         </div>
