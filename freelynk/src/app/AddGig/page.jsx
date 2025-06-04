@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import './AddGig.module.css';
+import './AddGig.css';
 import NavBar from '../../components/navbar2/Navbar';
 
 export default function AddGig() {
