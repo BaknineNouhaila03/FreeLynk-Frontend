@@ -52,9 +52,7 @@ export default function LoginForm({ onClose }) {
                     <button className={styles.closeButton} onClick={onClose}>✕</button>
                 </div>
 
-                <p className={styles.accountText}>
-                    Don't have an account? <a href="#" className={styles.signInLink}>Sign Up</a>
-                </p>
+
 
                 <form onSubmit={handleSubmit}>
                     <div className={styles.formGroup}>

@@ -1,50 +1,39 @@
-"use client"
-import { useState } from 'react';
-import styles from './ProjectDetails.module.css';
-import Image from 'next/image';
-import { BookmarkIcon, User, Mail } from 'lucide-react';
-import NavBar from '../../components/navbar2/Navbar';
-import Footer from '../../components/Footer/Footer';
 
-export default function ProjectDetails() {
+'use client'
+import { useState,use } from 'react';
+import styles from './ProjectDetails.module.css'; // ✅ make sure CSS is available in this folder or adjust path
+import { BookmarkIcon, User, Mail } from 'lucide-react';
+import NavBar from '../../../components/navbar2/Navbar';
+import Footer from '../../../components/Footer/Footer';
+
+export default function ProjectDetails({ params }) {
+const { id } = use(params);
   const [activeTab, setActiveTab] = useState('details');
-  
-  // Dummy data for the project
+
   const projectData = {
-    projectName: 'Project Name',
+    projectName: 'Project Name ' + id,
     budget: { min: 250.00, max: 750.00, currency: 'USD' },
     biddingEndsIn: { days: 2, hours: 23 },
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    description: 'Lorem ipsum dolor sit amet... (full text)',
     keyOfferings: [
       'Lorem ipsum dolor sit amet',
-      'Consectetur adipiscing elit. Sed do eiusmod tempor incididunt',
-      'Labore et dolore magna aliqua. Ut enim ad minim veniam',
-      'Suis nostrud exercitation ullamco laboris nisi ut aliquip'
+      'Consectetur adipiscing elit...',
     ],
     skillsRequired: ['Website Design', 'Lead Generation'],
-    projectId: '38456450',
+    projectId: id,
     clientInfo: {
-      name: 'Jhon Smith',
-      email: 'Jhon@gmail.com',
+      name: 'John Smith',
+      email: 'john@gmail.com',
     },
     proposals: [
       {
-        name: 'Freelancer Name',
-        title: 'Full Stack dev',
+        name: 'Freelancer A',
+        title: 'Full Stack Developer',
         rating: 5.0,
         price: 50.00,
         currency: 'USD',
         deliveryTime: '7 days',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-      },
-      {
-        name: 'Freelancer Name',
-        title: 'Full Stack dev',
-        rating: 5.0,
-        price: 50.00,
-        currency: 'USD',
-        deliveryTime: '7 days',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+        description: 'Proposal description...'
       }
     ]
   };

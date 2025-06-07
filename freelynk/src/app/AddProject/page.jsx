@@ -11,9 +11,15 @@ const AddProject = () => {
     budgetMax: '',
     endDate: '',
     description: '',
-    keyOfferings: [''],
     skillsRequired: ['']
   });
+  const removeItem = (type, indexToRemove) => {
+  setProject(prev => ({
+    ...prev,
+    [type]: prev[type].filter((_, index) => index !== indexToRemove)
+  }));
+};
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,7 +59,6 @@ const AddProject = () => {
     // Filter out empty items from arrays
     const formattedProject = {
       ...project,
-      keyOfferings: project.keyOfferings.filter(item => item.trim() !== ''),
       skillsRequired: project.skillsRequired.filter(item => item.trim() !== '')
     };
     
@@ -139,51 +144,50 @@ const AddProject = () => {
             <span>{project.description.length}/700</span>
           </div>
         </div>
+      
         
-        <div className="form-group">
-          <label>Key Offering</label>
-          {project.keyOfferings.map((offering, index) => (
-            <div key={`offering-${index}`} className="array-input-wrapper">
-              <input
-                type="text"
-                value={offering}
-                onChange={(e) => handleArrayChange('keyOfferings', index, e.target.value)}
-              />
-              {index === project.keyOfferings.length - 1 && (
-                <button 
-                  type="button" 
-                  className="add-item-btn"
-                  onClick={() => addItem('keyOfferings')}
-                >
-                  +
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
-        
-        <div className="form-group">
-          <label>Skills Required</label>
-          {project.skillsRequired.map((skill, index) => (
-            <div key={`skill-${index}`} className="array-input-wrapper">
-              <input
-                type="text"
-                value={skill}
-                onChange={(e) => handleArrayChange('skillsRequired', index, e.target.value)}
-              />
-              {index === project.skillsRequired.length - 1 && (
-                <button 
-                  type="button" 
-                  className="add-item-btn"
-                  onClick={() => addItem('skillsRequired')}
-                >
-                  +
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
-        
+<div className="form-group">
+  <label>Skills Required</label>
+  <div className="skills-list">
+    {project.skillsRequired.map((skill, index) => (
+      <div key={`skill-${index}`} className="skill-item">
+        <input
+          type="text"
+          value={skill}
+          placeholder={`Skill ${index + 1}`}
+          onChange={(e) =>
+            handleArrayChange("skillsRequired", index, e.target.value)
+          }
+        />
+        {/* Show remove button only if skill is not empty */}
+        {skill.trim() !== "" && (
+          <button
+            type="button"
+            className="remove-skill-btn"
+            onClick={() => removeItem("skillsRequired", index)}
+            aria-label="Remove skill"
+          >
+            −
+          </button>
+        )}
+        {/* Show add button only on last skill input */}
+        {index === project.skillsRequired.length - 1 && (
+          <button
+            type="button"
+            className="add-skill-btn"
+            onClick={() => addItem("skillsRequired")}
+            aria-label="Add skill"
+          >
+            +
+          </button>
+        )}
+      </div>
+    ))}
+  </div>
+</div>
+
+
+
         <div className="submit-container">
           <button type="submit" className="submit-button">Add</button>
         </div>

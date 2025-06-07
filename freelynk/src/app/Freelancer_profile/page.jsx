@@ -178,20 +178,9 @@ export default function FreelancerProfile() {
                                     cursor: "pointer",
                                     width: isMobile ? "100%" : "110px"
                                 }}>
-                                    Contact
-                                </button>
-                                <button style={{
-                                    backgroundColor: "rgb(47, 60, 126, 0.83)",
-                                    color: "white",
-                                    padding: "8px 16px",
-                                    borderRadius: "8px",
-                                    border: "none",
-                                    fontWeight: "bold",
-                                    cursor: "pointer",
-                                    width: isMobile ? "100%" : "110px"
-                                }}>
                                     Projects
                                 </button>
+
                             </div>
                         </div>
                     </div>

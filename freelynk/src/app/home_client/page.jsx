@@ -57,7 +57,6 @@ export default function Home_client() {
             <div className="container" style={{ maxWidth: "1200px", margin: "auto", padding: "20px" }}>
                 <ActionButtons />
                 <Section title="Recommended for you" freelancers={freelancers} />
-                <Section title="Top Validated Freelancers" freelancers={freelancers} />
                 <CategorySection categories={categories} />
             </div>
             <div style={{ backgroundColor: "#2f3c7e", marginTop: "50px" }}>

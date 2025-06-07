@@ -41,9 +41,6 @@ export default function SignUpForm({ onClose, userType }) {
           <button className={styles.closeButton} onClick={onClose}>✕</button>
         </div>
         
-        <p className={styles.accountText}>
-          Already have an account? <a href="#" className={styles.signInLink}>Sign In</a>
-        </p>
         
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formRow}>

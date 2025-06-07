@@ -226,3 +226,52 @@
       width: 100%;
     }
   }
+  .skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.skill-item input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.remove-skill-btn {
+  background-color: #ff4d4f;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.remove-skill-btn:hover {
+  background-color: #d9363e;
+}
+
+.add-skill-btn {
+  margin-top: 10px;
+  align-self: start;
+  padding: 6px 12px;
+  background-color: #2f3c7e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-skill-btn:hover {
+  background-color: #1f2a5c;
+}
