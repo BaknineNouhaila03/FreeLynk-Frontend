@@ -13,9 +13,9 @@ export default function SignUpForm({ onClose, userType }) {
     confirmPassword: "",
     userType: userType
   });
-  
+
   const [showPassword, setShowPassword] = useState(false);
-  
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData(prev => ({
@@ -23,12 +23,48 @@ export default function SignUpForm({ onClose, userType }) {
       [id]: value
     }));
   };
-  
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+
+    // Simple frontend validation
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup/client`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword, 
+
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Signup failed: ${errorText}`);
+      }
+
+      const result = await response.text();
+      console.log("Signup successful:", result);
+      alert("Signup successful!");
+
+      onClose();
+    } catch (err) {
+      console.error(err);
+      alert("Signup failed. Check console for details.");
+    }
   };
-  
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -40,8 +76,8 @@ export default function SignUpForm({ onClose, userType }) {
           <h1 className={styles.title}>Sign Up as {userType}</h1>
           <button className={styles.closeButton} onClick={onClose}>✕</button>
         </div>
-        
-        
+
+
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
@@ -55,7 +91,7 @@ export default function SignUpForm({ onClose, userType }) {
                 onChange={handleChange}
               />
             </div>
-            
+
             <div className={styles.formGroup}>
               <label htmlFor="lastName" className={styles.formLabel}>Last Name</label>
               <input
@@ -68,7 +104,7 @@ export default function SignUpForm({ onClose, userType }) {
               />
             </div>
           </div>
-          
+
           <div className={styles.formGroup}>
             <label htmlFor="email" className={styles.formLabel}>Email address</label>
             <input
@@ -80,7 +116,7 @@ export default function SignUpForm({ onClose, userType }) {
               onChange={handleChange}
             />
           </div>
-          
+
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
               <label htmlFor="password" className={styles.formLabel}>Password</label>
@@ -93,7 +129,7 @@ export default function SignUpForm({ onClose, userType }) {
                 onChange={handleChange}
               />
             </div>
-            
+
             <div className={styles.formGroup}>
               <label htmlFor="confirmPassword" className={styles.formLabel}>Confirm Password</label>
               <input
@@ -106,7 +142,7 @@ export default function SignUpForm({ onClose, userType }) {
               />
             </div>
           </div>
-          
+
           <div className={styles.checkboxGroup}>
             <input
               type="checkbox"
@@ -117,22 +153,22 @@ export default function SignUpForm({ onClose, userType }) {
             />
             <label htmlFor="showPassword" className={styles.checkboxLabel}>Show password</label>
           </div>
-          
+
           <button type="submit" className={styles.signUpButton}>
             Sign Up
           </button>
-          
+
           <div className={styles.divider}>
             <span className={styles.dividerLine}></span>
             <span className={styles.dividerText}>or</span>
             <span className={styles.dividerLine}></span>
           </div>
-          
+
           <button type="button" className={styles.googleButton}>
-          <img src="assets/image.png" style={{ height: "18px", width: "18px" }} />
+            <img src="assets/image.png" style={{ height: "18px", width: "18px" }} />
             Continue with Google
           </button>
-          
+
           <p className={styles.termsText}>
             By Signing Up you accept our <a href="#" className={styles.termsLink}>Privacy Policy and Terms of Services</a>
           </p>

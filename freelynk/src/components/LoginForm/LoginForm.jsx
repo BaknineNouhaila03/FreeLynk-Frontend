@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState  } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./signin.module.css";
 import ResetPassword from "../ResetPassword/ResetPassword"; // Import the ResetPassword component
 
 export default function LoginForm({ onClose }) {
+    const router = useRouter(); 
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -21,10 +23,38 @@ export default function LoginForm({ onClose }) {
         }));
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Form submitted:", formData);
-    };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  console.log("Form submitted:", formData);
+
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: formData.email,
+        password: formData.password,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Login failed: ${errorText}`);
+    }
+
+    const data = await response.json(); 
+    localStorage.setItem("jwtToken", data.accessToken);
+    localStorage.setItem("clientName", data.name); 
+
+    router.push("/home_client");
+    onClose();
+  } catch (error) {
+    console.error(error.message);
+    alert(error.message); 
+  }
+};
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -39,7 +69,6 @@ export default function LoginForm({ onClose }) {
         setShowResetPassword(false);
     };
 
-    // If showing reset password, return that component instead
     if (showResetPassword) {
         return <ResetPassword onClose={handleResetPasswordClose} />;
     }

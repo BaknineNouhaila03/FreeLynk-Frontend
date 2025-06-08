@@ -127,4 +127,29 @@
     .bidCount {
       margin-top: 10px;
     }
+      .description {
+    font-size: 0.95rem;
+    line-height: 1.4;
   }
+
+  .toggleButton {
+    display: block;
+    margin-top: 0.5rem;
+  }
+  }
+  .description {
+  font-size: 1rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+  max-width: 100%;
+  margin-bottom: 1rem;
+}
+
+.toggleButton {
+  color: #2f3c7e;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+

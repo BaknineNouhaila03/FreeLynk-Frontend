@@ -7,6 +7,15 @@ import { useRouter } from 'next/navigation'
 import Link from "next/link";
 
 export default function Home_client() {
+const [clientName, setClientName] = useState("Client");
+
+useEffect(() => {
+    const storedName = localStorage.getItem("clientName");
+    if (storedName) {
+        setClientName(storedName);
+    }
+}, []);
+
     const freelancers = Array.from({ length: 5 }, (_, i) => ({
         id: i + 1,
         name: "Freelancer Name",
@@ -53,7 +62,7 @@ export default function Home_client() {
     return (
         <div className="font-inter" style={{ backgroundColor: "#e6e6e6", minHeight: "100vh" }}>
             <NavBar />
-            <HeaderSection />
+            <HeaderSection clientName={clientName} />
             <div className="container" style={{ maxWidth: "1200px", margin: "auto", padding: "20px" }}>
                 <ActionButtons />
                 <Section title="Recommended for you" freelancers={freelancers} />
@@ -66,22 +75,25 @@ export default function Home_client() {
     );
 }
 
-const HeaderSection = () => (
-    <div style={{ backgroundColor: "#2f3c7e", color: "white", padding: "60px 20px", marginTop: "70px" }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-            <h1 style={{ fontSize: "32px", fontWeight: "bold", textShadow: "1px 1px 1px white" }}>WELCOME, MR. X!</h1>
-            <p style={{ fontSize: "16px", marginTop: "10px" }}>
-                Ready to find the perfect freelancer for your next big idea? Let's make it happen.
-            </p>
+const HeaderSection = ({ clientName }) => {
+    console.log("HeaderSection received clientName:", JSON.stringify(clientName));
+    
+    return (
+        <div style={{ backgroundColor: "#2f3c7e", color: "white", padding: "60px 20px", marginTop: "70px" }}>
+            <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+                <h1 style={{ fontSize: "32px", fontWeight: "bold", textShadow: "1px 1px 1px white" }}>
+                    WELCOME, {clientName}!
+                </h1>
+                <br></br>
+                <p>Ready to find the perfect freelancer for your next big idea? Let’s make it happen.</p>
+            </div>
         </div>
-    </div>
-);
-
+    );
+};
 const ActionButtons = () => {
     const router = useRouter();
     const [windowWidth, setWindowWidth] = useState(0);
 
-    // Initialize window width on client side
     useEffect(() => {
         setWindowWidth(window.innerWidth);
         

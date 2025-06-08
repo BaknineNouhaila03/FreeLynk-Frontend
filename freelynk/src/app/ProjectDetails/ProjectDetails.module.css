@@ -161,11 +161,30 @@
     font-size: 18px;
   }
   
+.description {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
+
+  /* NEW: Responsive width and font size */
+  width: 100%;
+  max-width: 800px;
+  font-size: 1rem;
+  word-wrap: break-word;
+
+  /* NEW: Responsive padding */
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
+
+/* Responsive tweak for small screens */
+@media (max-width: 600px) {
   .description {
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 20px;
+    font-size: 0.95rem;
+    padding: 0 0.75rem;
   }
+}
+
   
   .keyOfferings h3 {
     font-size: 16px;
@@ -242,7 +261,6 @@
   
   .freelancerInfo {
     display: flex;
-    margin-bottom: 16px;
   }
   
   .avatarContainer {
@@ -329,4 +347,23 @@
       text-align: left;
       margin-top: 10px;
     }
+    
   }
+.acceptButton {
+  background-color: #2f3c7e; /* Navy blue */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: fit-content;
+  align-self: flex-start;
+}
+
+.acceptButton:hover {
+  background-color: #1f2c5e; /* Slightly darker navy on hover */
+  transform: translateY(-2px);
+}

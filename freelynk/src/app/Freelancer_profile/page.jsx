@@ -185,7 +185,6 @@ export default function FreelancerProfile() {
                         </div>
                     </div>
 
-                    {/* Vertical Line - Hidden on mobile */}
                     {!isMobile && (
                         <div style={{
                             width: "1px",
