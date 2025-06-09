@@ -87,13 +87,11 @@ export default function Home_client() {
         try {
             if (isCurrentlyBookmarked) {
                 // Remove bookmark
-                const response = await fetch('http://localhost:8081/api/savedFreelancers/remove', {
+                const response = await fetch(`http://localhost:8081/api/savedFreelancers/remove?clientId=${clientId}&freelancerId=${freelancerId}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `clientId=${clientId}&freelancerId=${freelancerId}`
-                });
+                    }                });
 
                 if (!response.ok) {
                     throw new Error('Failed to remove freelancer');
