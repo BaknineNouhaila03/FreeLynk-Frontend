@@ -10,7 +10,7 @@ export default function SavedFreelancers() {
   const [freelancers, setFreelancers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   const getClientEmail = () => {
     return localStorage.getItem('clientEmail');
   };
@@ -23,13 +23,13 @@ export default function SavedFreelancers() {
       }
 
       const response = await fetch(`http://localhost:8081/api/clients/email/${clientEmail}`);
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch client details');
       }
-      
+
       const client = await response.json();
-      return client.id; 
+      return client.id;
     } catch (error) {
       console.error('Error getting client ID:', error);
       throw error;
@@ -43,14 +43,14 @@ export default function SavedFreelancers() {
   const fetchSavedFreelancers = async () => {
     try {
       setLoading(true);
-      const clientId = await getClientId(); 
-      
-      const response = await fetch(`http://localhost:8081/api/saved-freelancers/client/${clientId}`);
-      
+      const clientId = await getClientId();
+
+      const response = await fetch(`http://localhost:8081/api/savedFreelancers/client/${clientId}`);
+
       if (!response.ok) {
         throw new Error('Failed to fetch saved freelancers');
       }
-      
+
       const data = await response.json();
       setFreelancers(data);
       setError(null);
@@ -64,16 +64,16 @@ export default function SavedFreelancers() {
 
   const removeFreelancer = async (freelancerId) => {
     try {
-      const clientId = await getClientId(); 
-      
-      const response = await fetch(`http://localhost:8081/api/saved-freelancers/remove?clientId=${clientId}&freelancerId=${freelancerId}`, {
+      const clientId = await getClientId();
+
+      const response = await fetch(`http://localhost:8081/api/savedFreelancers/remove?clientId=${clientId}&freelancerId=${freelancerId}`, {
         method: 'DELETE',
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to remove freelancer');
       }
-      
+
       setFreelancers(prev => prev.filter(f => f.freelancerId !== freelancerId));
     } catch (err) {
       console.error('Error removing freelancer:', err);
@@ -81,17 +81,20 @@ export default function SavedFreelancers() {
     }
   };
 
-  const filteredFreelancers = freelancers.filter(freelancer => 
-    freelancer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    freelancer.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    freelancer.description.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredFreelancers = freelancers.filter(freelancer =>
+    freelancer.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    freelancer.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        freelancer.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    freelancer.occupation?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    freelancer.description?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
 
   const renderStars = (rating) => {
     const stars = [];
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
-    
+
     for (let i = 0; i < fullStars; i++) {
       stars.push('★');
     }
@@ -101,14 +104,14 @@ export default function SavedFreelancers() {
     while (stars.length < 5) {
       stars.push('☆');
     }
-    
+
     return stars.join('');
   };
 
   if (loading) {
     return (
       <div>
-        <NavBar/>
+        <NavBar />
         <div className={styles.container}>
           <div className={styles.loading}>Loading saved freelancers...</div>
         </div>
@@ -119,7 +122,7 @@ export default function SavedFreelancers() {
   if (error) {
     return (
       <div>
-        <NavBar/>
+        <NavBar />
         <div className={styles.container}>
           <div className={styles.error}>{error}</div>
           <button onClick={fetchSavedFreelancers} className={styles.retryButton}>
@@ -133,59 +136,35 @@ export default function SavedFreelancers() {
   return (
     <div>
       <NavBar/>
-      <div className={styles.container}>
-        <h1 className={styles.title}>Saved Freelancers</h1>
-        
-        <div className={styles.searchContainer}>
-          <Search className={styles.searchIcon} size={20} />
-          <input
-            type="text"
-            placeholder="Search freelancer"
-            className={styles.searchInput}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-
-        {filteredFreelancers.length === 0 ? (
-          <div className={styles.noResults}>
-            {searchTerm ? 'No freelancers found matching your search.' : 'No saved freelancers yet.'}
-          </div>
-        ) : (
-          <div className={styles.freelancersContainer}>
-            {filteredFreelancers.map((freelancer) => (
-              <div key={freelancer.freelancerId} className={styles.freelancerCard}>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Saved Freelancers</h1>
+      
+      <div className={styles.searchContainer}>
+        <Search className={styles.searchIcon} size={20} />
+        <input
+          type="text"
+          placeholder="Search freelancer"
+          className={styles.searchInput}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      <div className={styles.freelancersContainer}>
+            {filteredFreelancers.map((freelancer, index) => (
+              <div key={index} className={styles.freelancerCard}>
                 <div className={styles.freelancerInfo}>
                   <div className={styles.avatarContainer}>
-                    <div className={styles.avatar}>
-                      {freelancer.profileImage ? (
-                        <img src={freelancer.profileImage} alt={freelancer.name} />
-                      ) : (
-                        <div className={styles.avatarPlaceholder}>
-                          {freelancer.name.charAt(0).toUpperCase()}
-                        </div>
-                      )}
-                    </div>
+                    <div className={styles.avatar}></div>
                   </div>
                   <div className={styles.freelancerDetails}>
-                    <h3 className={styles.freelancerName}>{freelancer.name}</h3>
+                    <h3 className={styles.freelancerName}>{freelancer.firstName}&nbsp;{freelancer.lastName}</h3>
                     <div className={styles.freelancerTitle}>
-                      {freelancer.title}
+                      {freelancer.occupation}
                       <span className={styles.rating}>({freelancer.rating})</span>
-                      <span className={styles.stars}>{renderStars(freelancer.rating)}</span>
-                    </div>
-                    <div className={styles.priceInfo}>
-                      ${freelancer.price} {freelancer.currency} • {freelancer.deliveryTime}
+                      <span className={styles.stars}>★★★★★</span>
                     </div>
                   </div>
-                  <div className={styles.freelancerActions}>
-                    <button 
-                      onClick={() => removeFreelancer(freelancer.freelancerId)}
-                      className={styles.removeButton}
-                      title="Remove from saved"
-                    >
-                      <Trash2 size={18} />
-                    </button>
+                  <div className={styles.freelancerPrice}>
                   </div>
                 </div>
                 <div className={styles.freelancerDescription}>
@@ -194,11 +173,12 @@ export default function SavedFreelancers() {
               </div>
             ))}
           </div>
-        )}
-      </div>
-      <div style={{ backgroundColor: "#2f3c7e", marginTop: "50px" }}>
-        <Footer />
+      
+    </div>
+    <div style={{ backgroundColor: "#2f3c7e", marginTop: "50px" }}>
+                <Footer />
       </div>
     </div>
+
   );
 }
