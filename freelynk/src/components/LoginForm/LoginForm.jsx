@@ -47,6 +47,7 @@ const handleSubmit = async (e) => {
     const data = await response.json(); 
     localStorage.setItem("jwtToken", data.accessToken);
     localStorage.setItem("clientName", data.name); 
+    localStorage.setItem("clientEmail",data.email);
 
     router.push("/home_client");
     onClose();

@@ -22,20 +22,38 @@ const handleAccept = async (bidId) => {
   try {
     const response = await fetch(`http://localhost:8081/api/bids/${bidId}/accept`, {
       method: 'PUT',
-        headers: {
-    'Content-Type': 'application/json',
-  },
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
 
     if (!response.ok) throw new Error('Failed to accept bid');
 
     alert("Bid accepted!");
 
+    // REFRESH project and proposals data here:
+    if (actualId) {
+      // Fetch updated project
+      fetch(`http://localhost:8081/api/projects/${actualId}?id=${actualId}`)
+        .then(res => res.json())
+        .then(data => setProjectData(data))
+        .catch(console.error);
+
+      // Fetch updated proposals
+      setProposalsLoading(true);
+      fetch(`http://localhost:8081/api/bids/project/${actualId}/bids`)
+        .then(res => res.json())
+        .then(data => setProposals(data))
+        .catch(console.error)
+        .finally(() => setProposalsLoading(false));
+    }
+
   } catch (error) {
     console.error(error);
     alert("An error occurred while accepting the bid.");
   }
 };
+
 
 
   useEffect(() => {
@@ -203,9 +221,23 @@ const handleAccept = async (bidId) => {
                         <div className={styles.deliveryTime}>
                           in {proposal.deliveryDays || 'N/A'} days
                         </div>
-                        <button className={styles.acceptButton}
-                          onClick={() => handleAccept(proposal.id)}
->Accept</button>
+                   <button
+  className={`${styles.acceptButton} ${
+    proposal.status === 'ACCEPTED'
+      ? styles.accepted
+      : proposal.status === 'REJECTED'
+      ? styles.rejected
+      : ''
+  }`}
+  disabled={proposal.status === 'ACCEPTED' || proposal.status === 'REJECTED'}
+  onClick={() => handleAccept(proposal.id)}
+>
+  {proposal.status === 'ACCEPTED'
+    ? 'Accepted'
+    : proposal.status === 'REJECTED'
+    ? 'Rejected'
+    : 'Accept'}
+</button>
 
                       </div>
                     </div>

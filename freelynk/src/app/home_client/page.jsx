@@ -220,6 +220,26 @@ const CategorySection = ({ categories }) => (
 
 const CategoryCard = ({ image, title, description }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const router = useRouter();
+
+    // Map category titles to URL-friendly slugs
+    const getCategorySlug = (title) => {
+        const categoryMap = {
+            "Web and App development": "web-development",
+            "Graphic & UI/UX design": "graphic-design",
+            "Writing and translation": "writing-translation",
+            "Digital Marketing": "digital-marketing",
+            "Video & Animation Services": "video-animation",
+            "Business & Virtual Assistance": "business-assistance"
+        };
+        
+        return categoryMap[title] || title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    };
+
+    const handleCategoryClick = () => {
+        const categorySlug = getCategorySlug(title);
+        router.push(`/Freelancer_category/${categorySlug}`);
+    };
 
     return (
         <div
@@ -233,6 +253,7 @@ const CategoryCard = ({ image, title, description }) => {
             }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            onClick={handleCategoryClick}
         >
             {image && <img src={image} alt={title} style={{ width: "60px", height: "60px", marginBottom: "16px" }} />}
             <h3 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "10px" }}>{title}</h3>
