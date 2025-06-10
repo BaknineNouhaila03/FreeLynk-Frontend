@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import NavBar from "../../../components/navbar2/Navbar";
 import Link from 'next/link';
+import { useRouter } from "next/navigation";
 
 
 export default function FreelancerProfile() {
@@ -12,6 +13,7 @@ export default function FreelancerProfile() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [gig, setgig] = useState();
+
     
 
     const params = useParams();
@@ -491,8 +493,10 @@ useEffect(() => {
                         }} />
 
 <div>
-    <p>{reviewStats.total} Reviews</p>
-    <br></br>
+<div style={{ display: 'flex', alignItems: 'center' }}>
+  <p>{reviewStats.total} Reviews</p>
+  <AddReviewButton freelancerId={id} />
+</div>    <br></br>
     {reviewStats.breakdown.map((item) => (
         <div key={item.stars} style={{
             display: "flex",
@@ -586,3 +590,40 @@ const Section = ({ gigs }) => (
         </div>
     </div>
 );
+const AddReviewButton = ({ freelancerId }) => {
+  const router = useRouter();
+
+  const handleAddReview = () => {
+    // Check if user is authenticated
+    const jwtToken = localStorage.getItem('jwtToken');
+    
+    if (!jwtToken) {
+      alert('Please login to add a review');
+      // Optionally redirect to login page
+      // router.push('/login');
+      return;
+    }
+
+    // Navigate to rating page with freelancer ID
+        console.log('Navigating to:', `/rating/${freelancerId}`);
+        router.push(`/rating/${freelancerId}`);  };
+
+  return (
+    <button 
+      onClick={handleAddReview}
+      className="add-review-btn"
+      style={{
+        marginLeft: '15px',
+        padding: '8px 16px',
+        backgroundColor: '#2f3c7e',
+        color: 'white',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        fontSize: '14px'
+      }}
+    >
+      Add Review
+    </button>
+  );
+};
