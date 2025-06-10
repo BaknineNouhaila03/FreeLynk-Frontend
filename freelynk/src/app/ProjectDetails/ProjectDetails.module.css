@@ -317,12 +317,31 @@
     color: #4caf50;
     font-size: 14px;
   }
-  
+.proposalDescription {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  word-wrap: break-word; /* Ensures long words break and wrap */
+  overflow-wrap: break-word; /* Modern alternative to word-wrap */
+  hyphens: auto; /* Adds hyphenation for better text flow */
+  max-width: 100%; /* Prevents overflow */
+  font-size: 1rem; /* Responsive base font size */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
   .proposalDescription {
-    color: #555;
-    line-height: 1.6;
+    font-size: 0.95rem; /* Slightly smaller font on mobile */
+    line-height: 1.5; /* Tighter line spacing */
+    padding: 0 0.5rem; /* Small side padding */
   }
-  
+}
+
+@media (max-width: 480px) {
+  .proposalDescription {
+    font-size: 0.9rem; /* Even smaller font for very small screens */
+  }
+}
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .detailsContainer {

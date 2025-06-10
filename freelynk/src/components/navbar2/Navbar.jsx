@@ -191,9 +191,6 @@ export default function NavBar() {
                     ))}
                 {!loadingNotifs && notifications.length > 5 && (
                   <div style={{ padding: "8px", textAlign: "center" }}>
-                    <Link href="/notifications" style={{ color: "#007bff", fontSize: "14px" }}>
-                      Voir toutes les notifications
-                    </Link>
                   </div>
                 )}
               </div>
