@@ -14,7 +14,6 @@ export default function ClientCard() {
   useEffect(() => {
     const fetchClientData = async () => {
       try {
-        // Get JWT token and email from localStorage
         const jwtToken = localStorage.getItem('jwtToken');
         const userEmail = localStorage.getItem('clientEmail'); // Assuming email is stored separately
         

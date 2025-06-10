@@ -329,12 +329,11 @@ const FreelancerCard = ({ freelancer, onBookmarkToggle }) => {
                         e.currentTarget.style.transform = "scale(1)";
                     }}
                 >
-{freelancer.isBookmarked ? (
-    <BsBookmarkFill style={{ fontSize: "18px", color: "black" }} />
-) : (
-    <FiBookmark style={{ fontSize: "18px", color: "#666" }} />
-)}
-
+                    {freelancer.isBookmarked ? (
+                        <BsBookmarkFill style={{ fontSize: "18px", color: "black" }} />
+                    ) : (
+                        <FiBookmark style={{ fontSize: "18px", color: "#666" }} />
+                    )}
                 </button>
             </div>
             <div style={{ padding: "0px 16px 10px 16px" }}>
@@ -349,14 +348,21 @@ const FreelancerCard = ({ freelancer, onBookmarkToggle }) => {
                             marginRight: "8px"
                         }}
                     />
-                    <div style={{
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        letterSpacing: "0.5px",
-                        color: "#555"
-                    }}>
-                        {freelancer.firstName}&nbsp;{freelancer.lastName}
-                    </div>
+                    {/* Updated Link to include freelancer ID */}
+                    <Link href={`/Freelancer_profile/${freelancer.id}`} passHref>
+                        <div style={{
+                            fontSize: "12px",
+                            fontWeight: "600",
+                            letterSpacing: "0.5px",
+                            color: "#555",
+                            cursor: "pointer",
+                            '&:hover': {
+                                textDecoration: 'underline'
+                            }
+                        }}>
+                            {freelancer.firstName}&nbsp;{freelancer.lastName}
+                        </div>
+                    </Link>
                 </div>
 
                 <div style={{
@@ -367,7 +373,6 @@ const FreelancerCard = ({ freelancer, onBookmarkToggle }) => {
                     color: "#555",
                     marginTop: "10px",
                     marginBottom: "10px"
-
                 }}>
                     {freelancer.occupation}
                 </div>

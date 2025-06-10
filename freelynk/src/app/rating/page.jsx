@@ -6,9 +6,8 @@ import Footer from '../../components/Footer/Footer';
 
 const RatingFreelancer = () => {
   const [ratings, setRatings] = useState({
-    communication: 0,
-    quality: 0,
-    value: 0
+    rating: 0,
+
   });
   const [comment, setComment] = useState('');
   
@@ -60,19 +59,12 @@ const RatingFreelancer = () => {
       
       <form onSubmit={handleSubmit} className="rating-form">
         <div className="rating-row">
-          <label className="rating-label">Communication Level</label>
-          {renderStars('communication')}
+<label className="rating-label">Rate your experience</label>
+<label className="rating-label"> (1 = Poor, 5 = Excellent)</label>
+
+          {renderStars('rating')}
         </div>
-        
-        <div className="rating-row">
-          <label className="rating-label">Quality of delivery</label>
-          {renderStars('quality')}
-        </div>
-        
-        <div className="rating-row">
-          <label className="rating-label">Value of delivery</label>
-          {renderStars('value')}
-        </div>
+
         
         <div className="comment-section">
           <label className="comment-label">Comment</label>
