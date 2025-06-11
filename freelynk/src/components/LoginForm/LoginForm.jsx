@@ -1,4 +1,5 @@
 "use client";
+import { toast } from 'react-toastify';
 
 import { useState  } from "react";
 import { useRouter } from "next/navigation";
@@ -51,10 +52,10 @@ const handleSubmit = async (e) => {
 
     router.push("/client/home_client");
     onClose();
-  } catch (error) {
-    console.error(error.message);
-    alert(error.message); 
-  }
+  }catch (error) {
+  console.error(error.message);
+  toast.error(error.message || 'Something went wrong');
+}
 };
 
     const togglePasswordVisibility = () => {
@@ -127,16 +128,7 @@ const handleSubmit = async (e) => {
                         Sign In
                     </button>
 
-                    <div className={styles.divider}>
-                        <span className={styles.dividerLine}></span>
-                        <span className={styles.dividerText}>or</span>
-                        <span className={styles.dividerLine}></span>
-                    </div>
 
-                    <button type="button" className={styles.googleButton}>
-                        <img src="assets/image.png" style={{ height: "18px", width: "18px" }} />
-                        Continue with google
-                    </button>
                 </form>
             </div>
         </div>

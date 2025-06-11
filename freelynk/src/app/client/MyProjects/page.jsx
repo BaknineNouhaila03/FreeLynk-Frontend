@@ -52,7 +52,7 @@ export default function MyProjects() {
         setBidCounts(bidCountsMap);
       } catch (err) {
         console.error(err);
-        alert("Failed to load your projects.");
+        ("Failed to load your projects.");
       } finally {
         setLoading(false);
       }

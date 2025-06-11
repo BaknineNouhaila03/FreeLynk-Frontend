@@ -85,10 +85,8 @@ const AddProject = () => {
       }
 
       const result = await response.json();
-      alert("Project added successfully!");
       router.push("/client/MyProjects");
     } catch (error) {
-      alert("Failed to add project: " + error.message);
     }
   };
 

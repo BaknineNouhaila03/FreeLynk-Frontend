@@ -3,6 +3,8 @@
 import { useState } from "react";
 import styles from "./signup.module.css";
 import Image from "next/image";
+import Swal from 'sweetalert2';
+
 
 export default function SignUpForm({ onClose, userType }) {
   const [formData, setFormData] = useState({
@@ -191,15 +193,23 @@ export default function SignUpForm({ onClose, userType }) {
         throw new Error(`Signup failed: ${errorText}`);
       }
 
-      const result = await response.text();
-      console.log("Signup successful:", result);
-      alert("Signup successful!");
+const result = await response.text();
+console.log("Signup successful:", result);
+Swal.fire({
+  icon: 'success',
+  title: 'Success!',
+  text: 'Signup successful!',
+});
 
-      onClose();
-    } catch (err) {
-      console.error(err);
-      alert("Signup failed. Check console for details.");
-    }
+onClose();
+} catch (err) {
+  console.error(err);
+  Swal.fire({
+    icon: 'error',
+    title: 'Signup Failed',
+    text: 'Check the console for more details.',
+  });
+}
   };
 
   const togglePasswordVisibility = () => {

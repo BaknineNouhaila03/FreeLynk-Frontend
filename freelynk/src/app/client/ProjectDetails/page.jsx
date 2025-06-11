@@ -5,6 +5,7 @@ import styles from './ProjectDetails.module.css';
 import { BookmarkIcon, User, Mail } from 'lucide-react';
 import NavBar from '@/components/navbar_client/Navbar';
 import Footer from '@/components/Footer/Footer';
+import Swal from 'sweetalert2';
 
 export default function ProjectDetails() {
   const searchParams = useSearchParams();
@@ -29,8 +30,11 @@ const handleAccept = async (bidId) => {
 
     if (!response.ok) throw new Error('Failed to accept bid');
 
-    alert("Bid accepted!");
-
+Swal.fire({
+  icon: 'success',
+  title: 'Success!',
+  text: 'Signup successful!',
+});
     // REFRESH project and proposals data here:
     if (actualId) {
       // Fetch updated project

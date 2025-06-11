@@ -1,11 +1,13 @@
 "use client"
 import Footer from "@/components/Footer/Footer";
+import Swal from 'sweetalert2';
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import NavBar from "@/components/navbar_client/Navbar";
 import Link from 'next/link';
 import { useRouter } from "next/navigation";
+
 
 
 export default function FreelancerProfile() {
@@ -709,12 +711,15 @@ const AddReviewButton = ({ freelancerId }) => {
     // Check if user is authenticated
     const jwtToken = localStorage.getItem('jwtToken');
     
-    if (!jwtToken) {
-      alert('Please login to add a review');
-      // Optionally redirect to login page
-      // router.push('/login');
-      return;
-    }
+if (!jwtToken) {
+  Swal.fire({
+    icon: 'warning',
+    title: 'Login Required',
+    text: 'Please login to add a review',
+    confirmButtonText: 'OK'
+  });
+  return;
+}
 
     // Navigate to rating page with freelancer ID
         console.log('Navigating to:', `/rating/${freelancerId}`);

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import styles from "./NavBar.module.css";
 import { LogOut, Settings, User, Menu, X } from "lucide-react";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -19,17 +20,20 @@ export default function NavBar() {
   const [clientId, setClientId] = useState(null);
   const [notifications, setNotifications] = useState([]);
   const [loadingNotifs, setLoadingNotifs] = useState(true);
+  const router = useRouter();
 
   const notifRef = useRef();
   const profileRef = useRef();
   const mobileMenuRef = useRef();
+   const handleLogout = () => {
+    localStorage.clear(); 
+    router.push("/home");
+  };
 
-  // Callback pour gérer les nouvelles notifications via WebSocket
   const handleNewNotification = useCallback((notification) => {
     console.log('🔔 Nouvelle notification reçue:', notification);
     setNotifications((prev) => [notification, ...prev]);
-    
-    // Optionnel: jouer un son ou afficher une notification système
+
     if (Notification.permission === 'granted') {
       new Notification('Nouvelle notification', {
         body: notification.message,
@@ -213,40 +217,13 @@ export default function NavBar() {
             className={styles.iconButton}
             aria-label="Toggle profile menu"
           >
-            <div className={styles.navItem}>
-              <FaUser size={20} color="#535354" />
-              <span className={styles.navLabel}>Profile</span>
+            <div className={styles.navItem} onClick={handleLogout} style={{ cursor: 'pointer' }}>
+              <LogOut size={20} color="#535354" />
+              <span className={styles.navLabel}>Logout</span>
             </div>
+
           </button>
 
-          {showProfileDropdown && (
-            <div className={styles.dropdownMenuProfile}>
-              <div className={styles.profileItem}>
-                <Link
-                  href="/client/Client_profile"
-                  onClick={() => {
-                    setShowProfileDropdown(false);
-                    setMobileMenuOpen(false);
-                  }}
-                >
-                  Profile
-                </Link>
-                <User size={20} />
-              </div>
-              <div className={styles.profileItem}>
-                <button
-                  onClick={() => {
-                    alert("Logout");
-                    setShowProfileDropdown(false);
-                    setMobileMenuOpen(false);
-                  }}
-                >
-                  Logout
-                </button>
-                <LogOut size={20} />
-              </div>
-            </div>
-          )}
         </li>
       </ul>
     </nav>
