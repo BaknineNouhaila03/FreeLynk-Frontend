@@ -86,7 +86,7 @@ export default function NavBar() {
 
     async function fetchClientAndNotifications() {
       try {
-        const clientRes = await fetch(`NEXT_PUBLIC_BACKEND_URL/api/clients/email/${clientEmail}`);
+        const clientRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/clients/email/${clientEmail}`);
         if (!clientRes.ok) {
           setLoadingNotifs(false);
           return;
@@ -94,7 +94,7 @@ export default function NavBar() {
         const clientData = await clientRes.json();
         setClientId(clientData.id);
 
-        const notifRes = await fetch(`NEXT_PUBLIC_BACKEND_URL/api/notifications/${clientData.id}`);
+        const notifRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/notifications/${clientData.id}`);
         if (!notifRes.ok) {
           setLoadingNotifs(false);
           return;

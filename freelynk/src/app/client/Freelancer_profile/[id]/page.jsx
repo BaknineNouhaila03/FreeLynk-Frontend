@@ -411,11 +411,11 @@ const formatDate = (dateString) => {
                             <p style={{
                                 color: "#f2a469",
                                 fontWeight: "600"
-                            }}>Phone:<span style={{
+                            }}>Email:<span style={{
                                 color: "black",
                                 fontWeight: "400",
                                 marginLeft: "10px"
-                            }}>{freelancer.phone}</span></p>
+                            }}>{freelancer.email}</span></p>
                         </div>
                     </div>
                 </div>

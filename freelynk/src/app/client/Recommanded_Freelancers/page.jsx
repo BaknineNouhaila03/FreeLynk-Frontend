@@ -23,14 +23,15 @@ const FreelancerCard = ({ freelancer }) => {
     const [isBookmarked, setIsBookmarked] = useState(freelancer.isBookmarked || false);
     const [isLoading, setIsLoading] = useState(false);
 
+
     const handleBookmarkClick = async (e) => {
         e.preventDefault();
         e.stopPropagation();
-        
+
         if (isLoading) return;
-        
+
         setIsLoading(true);
-        
+
         try {
             if (isBookmarked) {
                 // Remove bookmark using existing endpoint
@@ -75,11 +76,12 @@ const FreelancerCard = ({ freelancer }) => {
         }
     };
 
+
     return (
         <div className="freelancer-card">
             <div className="card-image-container">
                 <img
-                    src={freelancer.imageUrl || "/assets/Client.jpg"}
+                    src={freelancer.firstGigUrl || "/assets/Client.jpg"}
                     alt="freelancer"
                     className="card-image"
                 />
@@ -112,13 +114,13 @@ const FreelancerCard = ({ freelancer }) => {
                 <div className="freelancer-occupation">
                     {freelancer.occupation}
                 </div>
-                
+
                 <div className="rating-container">
                     <span className="rating">
                         ★ {freelancer.rating}
                     </span>
                 </div>
-                
+
                 <p className="freelancer-description">
                     {freelancer.description}
                 </p>
@@ -127,10 +129,29 @@ const FreelancerCard = ({ freelancer }) => {
     );
 };
 
+
 const RecommendedFreelancers = ({ clientId }) => {
     const [recommendations, setRecommendations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const fetchFirstGigUrlForFreelancer = async (freelancerId) => {
+        try {
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/gigs/freelancers/${freelancerId}`
+            );
+
+            if (response.ok) {
+                const gigs = await response.json();
+                if (gigs && gigs.length > 0 && gigs[0].gigUrls && gigs[0].gigUrls.length > 0) {
+                    return gigs[0].gigUrls[0];
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching gigs:', error);
+        }
+        return null;
+    };
 
     useEffect(() => {
         const fetchRecommendations = async () => {
@@ -155,19 +176,25 @@ const RecommendedFreelancers = ({ clientId }) => {
                 const savedResponse = await fetch(
                     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/savedFreelancers/check?clientId=${clientId}`
                 );
-                
+
                 let savedFreelancerIds = [];
                 if (savedResponse.ok) {
                     savedFreelancerIds = await savedResponse.json();
                 }
 
-                // Normalize the freelancer data for FreelancerCard
-                const normalizedData = data.map(rec => ({
-                    ...rec.freelancer,
-                    description: rec.reason,
-                    clientId: clientId,
-                    isBookmarked: savedFreelancerIds.includes(rec.freelancer.id)
-                }));
+                // Normalize the freelancer data and fetch first gig URL for each
+                const normalizedData = await Promise.all(
+                    data.map(async (rec) => {
+                        const firstGigUrl = await fetchFirstGigUrlForFreelancer(rec.freelancer.id);
+                        return {
+                            ...rec.freelancer,
+                            description: rec.reason,
+                            clientId: clientId,
+                            isBookmarked: savedFreelancerIds.includes(rec.freelancer.id),
+                            firstGigUrl: firstGigUrl
+                        };
+                    })
+                );
 
                 setRecommendations(normalizedData);
             } catch (err) {
@@ -192,5 +219,4 @@ const RecommendedFreelancers = ({ clientId }) => {
         />
     );
 };
-
 export default RecommendedFreelancers;
