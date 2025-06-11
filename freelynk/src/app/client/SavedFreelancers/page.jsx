@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import styles from './SavedFreelancers.module.css';
 import { Search, Trash2 } from 'lucide-react';
-import NavBar from "@/components/navbar2/Navbar";
+import NavBar from "@/components/navbar_client/Navbar";
 import Footer from "@/components/Footer/Footer";
 
 export default function SavedFreelancers() {

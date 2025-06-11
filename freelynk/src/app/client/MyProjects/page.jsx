@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./MyProjects.module.css";
 import { Search } from "lucide-react";
-import NavBar from "@/components/navbar2/Navbar";
+import NavBar from "@/components/navbar_client/Navbar";
 import Footer from "@/components/Footer/Footer";
 
 export default function MyProjects() {

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './AddProject.css';
 import Footer from '@/components/Footer/Footer';
-import NavBar from '@/components/navbar2/Navbar';
+import NavBar from '@/components/navbar_client/Navbar';
 
 const AddProject = () => {
   const router = useRouter();

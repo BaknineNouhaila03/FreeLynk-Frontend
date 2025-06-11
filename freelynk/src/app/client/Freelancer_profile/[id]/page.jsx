@@ -3,7 +3,7 @@ import Footer from "@/components/Footer/Footer";
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import NavBar from "@/components/navbar2/Navbar";
+import NavBar from "@/components/navbar_client/Navbar";
 import Link from 'next/link';
 import { useRouter } from "next/navigation";
 

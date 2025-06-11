@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import NavBar from "@/components/navbar2/Navbar";
+import NavBar from "@/components/navbar_client/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { FiPlus, FiFolder, FiGlobe } from "react-icons/fi";
 import { useRouter } from 'next/navigation'

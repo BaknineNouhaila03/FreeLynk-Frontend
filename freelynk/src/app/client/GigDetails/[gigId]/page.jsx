@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import styles from './GigDetails.module.css';
-import NavBar from '@/components/navbar2/Navbar';
+import NavBar from '@/components/navbar_client/Navbar';
 import Link from 'next/link';
 
 export default function GigDetails() {

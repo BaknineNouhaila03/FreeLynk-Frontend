@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'; 
 import { useParams, useRouter } from 'next/navigation';
 import './RatingFreelancer.css'; 
-import NavBar from '@/components/navbar2/Navbar'; 
+import NavBar from '@/components/navbar_client/Navbar'; 
 import Footer from '@/components/Footer/Footer'; 
  
 const RatingFreelancer = () => { 
