@@ -28,7 +28,7 @@ const handleSubmit = async (e) => {
   console.log("Form submitted:", formData);
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +49,7 @@ const handleSubmit = async (e) => {
     localStorage.setItem("clientName", data.firstName); 
     localStorage.setItem("clientEmail",data.email);
 
-    router.push("/home_client");
+    router.push("/client/home_client");
     onClose();
   } catch (error) {
     console.error(error.message);

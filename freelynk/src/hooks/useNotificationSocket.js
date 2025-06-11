@@ -16,7 +16,7 @@ export default function useNotificationSocket(userId, onMessage) {
         }
 
         const client = new Client({
-            webSocketFactory: () => new SockJS('http://localhost:8081/ws'),
+            webSocketFactory: () => new SockJS('NEXT_PUBLIC_BACKEND_URL/ws'),
 
             reconnectDelay: 5000,
             heartbeatIncoming: 4000,

@@ -1,7 +1,7 @@
 
 import Head from 'next/head';
-import NavBar from '../../components/navbar2/Navbar';
-import Footer from '../../components/Footer/Footer';
+import NavBar from '@/components/navbar2/Navbar';
+import Footer from '@/components/Footer/Footer';
 
 export default function TC() {
     return (

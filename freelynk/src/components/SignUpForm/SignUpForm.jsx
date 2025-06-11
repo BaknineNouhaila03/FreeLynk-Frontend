@@ -34,7 +34,7 @@ export default function SignUpForm({ onClose, userType }) {
     }
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup/client`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/signup/client`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

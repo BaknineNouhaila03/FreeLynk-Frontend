@@ -86,7 +86,7 @@ export default function NavBar() {
 
     async function fetchClientAndNotifications() {
       try {
-        const clientRes = await fetch(`http://localhost:8081/api/clients/email/${clientEmail}`);
+        const clientRes = await fetch(`NEXT_PUBLIC_BACKEND_URL/api/clients/email/${clientEmail}`);
         if (!clientRes.ok) {
           setLoadingNotifs(false);
           return;
@@ -94,7 +94,7 @@ export default function NavBar() {
         const clientData = await clientRes.json();
         setClientId(clientData.id);
 
-        const notifRes = await fetch(`http://localhost:8081/api/notifications/${clientData.id}`);
+        const notifRes = await fetch(`NEXT_PUBLIC_BACKEND_URL/api/notifications/${clientData.id}`);
         if (!notifRes.ok) {
           setLoadingNotifs(false);
           return;
@@ -139,7 +139,7 @@ export default function NavBar() {
         ref={mobileMenuRef}
       >
         <li>
-          <Link href="/home_client" onClick={() => setMobileMenuOpen(false)}>
+          <Link href="/client/home_client" onClick={() => setMobileMenuOpen(false)}>
             <div className={styles.navItem}>
               <AiOutlineHome size={24} />
               <span className={styles.navLabel}>Home</span>
@@ -199,7 +199,7 @@ export default function NavBar() {
         </li>
 
         <li>
-          <Link href="/SavedFreelancers" onClick={() => setMobileMenuOpen(false)}>
+          <Link href="/client/SavedFreelancers" onClick={() => setMobileMenuOpen(false)}>
             <div className={styles.navItem}>
               <BsBookmarkFill size={20} />
               <span className={styles.navLabel}>Saved</span>
@@ -223,7 +223,7 @@ export default function NavBar() {
             <div className={styles.dropdownMenuProfile}>
               <div className={styles.profileItem}>
                 <Link
-                  href="/Client_profile"
+                  href="/client/Client_profile"
                   onClick={() => {
                     setShowProfileDropdown(false);
                     setMobileMenuOpen(false);
